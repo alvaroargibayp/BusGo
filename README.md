@@ -1,4 +1,4 @@
-# AppTiempo
+# AppBuses
 
 ### Funcionalidades
 
