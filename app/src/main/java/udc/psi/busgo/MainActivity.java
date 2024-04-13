@@ -28,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i(TAG, "comienzo");
+        Log.d(TAG, "OnCreate");
 
-        String url = "https://www.example.com/"; // URL de la API que deseas consultar
+        initialCall();
+    }
 
+    void initialCall(){
+        Log.d(TAG, "initialCall");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
