@@ -6,6 +6,10 @@ android {
     namespace = "udc.psi.busgo"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "udc.psi.busgo"
         minSdk = 30

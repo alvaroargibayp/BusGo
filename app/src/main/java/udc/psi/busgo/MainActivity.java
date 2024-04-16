@@ -1,15 +1,10 @@
 package udc.psi.busgo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
-import org.chromium.net.CronetEngine;
-import org.chromium.net.UrlRequest;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,34 +12,41 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONObject;
+
+import udc.psi.busgo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding activityMainBinding;
     private static final String TAG = "_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = activityMainBinding.getRoot();
+        setContentView(view);
 
         Log.d(TAG, "OnCreate");
 
-        initialCall();
+        searchAllLines();
     }
 
-    void initialCall(){
+    void searchAllLines(){
         Log.d(TAG, "initialCall");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                "https://itranvias.com/queryitr_v3.php?func=7&dato=20160101T000000_gl_0_20160101T000000",
+                "https://bus.delthia.com/api/lineas",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
+                        Log.d("_TAG", response.toString());
+                        activityMainBinding.tvLineasContent.setText(response.toString());
                     }
                 },
                 new Response.ErrorListener() {

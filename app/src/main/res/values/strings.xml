@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BusGo</string>
+    <string name="string_lineas">Lineas:</string>
 </resources>
