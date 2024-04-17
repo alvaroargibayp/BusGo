@@ -7,22 +7,43 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+    <com.google.android.material.tabs.TabLayout
         android:layout_height="wrap_content"
-        android:text="@string/string_lineas"
-        android:id="@+id/tv_tittle_lineas" />
+        android:layout_width="match_parent"
+        android:id="@+id/tab_layout">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/map"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_lineas_content"
-            android:scrollbars="vertical"/>
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/stops"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
 
-    </ScrollView>
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/home"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/lines"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/settings"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"/>
+
 
 </LinearLayout>
