@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "OnCreate");
 
-        searchAllLines();
+        searchAllStops();
     }
 
     void searchAllLines(){
@@ -41,6 +41,32 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 "https://bus.delthia.com/api/lineas",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("_TAG", response.toString());
+                        activityMainBinding.tvParadasContent.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Maneja errores aquí
+                    }
+                }
+        );
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    void searchAllStops(){
+        Log.d(TAG, "initialCall");
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                "https://bus.delthia.com/api/paradas",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
