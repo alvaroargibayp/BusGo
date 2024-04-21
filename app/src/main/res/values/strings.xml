@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">BusGo</string>
     <string name="string_lineas">Lineas:</string>
-    <string name="home">Hogar</string>
+    <string name="home">Home</string>
+    <string name="home_title">Busqueda individual</string>
     <string name="lines">Líneas</string>
     <string name="stops">Paradas</string>
     <string name="map">Mapa</string>
     <string name="settings">Ajustes</string>
     <string name="string_stops">Paradas:</string>
+    <string name="et_buscar">Introduce un id</string>
+    <string name="bt_search_string">Buscar</string>
 
 </resources>
