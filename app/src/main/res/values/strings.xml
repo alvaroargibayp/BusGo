@@ -7,5 +7,22 @@
     <string name="map">Mapa</string>
     <string name="settings">Ajustes</string>
     <string name="string_stops">Paradas:</string>
+    <string name="settings_themeTittle">Tema</string>
+    <string name="settings_languageTittle">Idioma</string>
+    <string name="settings_initialScreenTittle">Pantalla de inicio</string>
+    <string name="settings_launcherOptionsTittle">Configuracion del lanzador</string>
+    <string name="settings_option_initialScreen_home">Home (Por defecto)</string>
+    <string name="settings_option_initialScreen_map">Mapa</string>
+    <string name="settings_option_initialScreen_stops">Paradas</string>
+    <string name="settings_option_initialScreen_lines">Lineas</string>
+    <string name="settings_option_language_spanish">Español</string>
+    <string name="settings_option_language_english">Ingles</string>
+    <string name="settings_option_theme_blackTheme">Oscuro</string>
+    <string name="settings_option_theme_whiteTheme">Claro</string>
+    <string name="settings_option_theme_systemTheme">Sistema</string>
+    <string name="settings_option_launcherOptions_showFavoriteStops">Mostrar paradas favoritas</string>
+    <string name="settings_option_launcherOptions_showCloseStops">Mostrar paradas cercanas</string>
+    <string name="settings_option_launcherOptions_numberOfCloseStops">Nº de paradas cercanas a mostrar</string>
+    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas a mostrar</string>
 
 </resources>
