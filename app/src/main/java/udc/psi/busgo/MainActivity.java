@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity{
         View view = binding.getRoot();
         setContentView(view);
         Log.d(TAG, "OnCreate");
-
         configureTabs();
     }
 

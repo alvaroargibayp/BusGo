@@ -26,12 +26,14 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/radioGroupLanguageId"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/settings_toggle_language_spanish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/settings_option_language_spanish" />
 
                 <RadioButton
@@ -58,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_themeTittle" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +68,7 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/radioGroupThemeId"
                 android:orientation="vertical">
 
                 <RadioButton
@@ -85,6 +89,8 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
+
                     android:id="@+id/settings_toggle_theme_systemTheme"
                     android:text="@string/settings_option_theme_systemTheme"
 
@@ -138,6 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/settings_toggle_initialScreen_home"
+                    android:checked="true"
+
                     android:text="@string/settings_option_initialScreen_home"
                     />
 
@@ -167,6 +175,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/settings_toggle_launcherOptions_showFavoriteStops"
+                android:checked="true"
+
                 android:text="@string/settings_option_launcherOptions_showFavoriteStops"
                 />
 
@@ -180,6 +190,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/settings_toggle_launcherOptions_showCloseStops"
+                android:checked="true"
+
                 android:text="@string/settings_option_launcherOptions_showCloseStops"
 
                 />
