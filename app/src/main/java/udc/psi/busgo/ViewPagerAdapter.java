@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
+import udc.psi.busgo.tabs.MapFragment;
 import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
@@ -22,7 +23,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new MapTab();
+                return new MapFragment();
             case 1:
                 return new StopsTab();
             case 2:
@@ -40,4 +41,5 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 5;
     }
+
 }
