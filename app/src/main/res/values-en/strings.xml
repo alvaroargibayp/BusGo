@@ -19,6 +19,7 @@
     <string name="settings_option_initialScreen_lines">Lines</string>
     <string name="settings_option_language_spanish">Spanish</string>
     <string name="settings_option_language_english">English</string>
+    <string name="settings_option_language_galician">Galician</string>
     <string name="settings_option_theme_blackTheme">Dark</string>
     <string name="settings_option_theme_whiteTheme">White</string>
     <string name="settings_option_theme_systemTheme">System</string>

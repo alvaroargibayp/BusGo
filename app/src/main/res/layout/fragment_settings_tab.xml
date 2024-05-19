@@ -1,210 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".tabs.SettingsTab">
-
-    <LinearLayout
+    
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/settings_layout_bg"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_languageTittle" />
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            >
 
-            <RadioGroup
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioGroupLanguageId"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/settings_toggle_language_spanish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/settings_option_language_spanish" />
-
-                <RadioButton
-                    android:id="@+id/settings_toggle_language_english"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_option_language_english" />
-
-            </RadioGroup>
-
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/settings_layout_bg"
-
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_themeTittle" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioGroupThemeId"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/settings_layout_bg"
                 android:orientation="vertical">
 
-                <RadioButton
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_theme_whiteTheme"
-                    android:text="@string/settings_option_theme_whiteTheme"
+                    android:text="@string/settings_languageTittle" />
 
-                    />
-
-                <RadioButton
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_theme_blackTheme"
-                    android:text="@string/settings_option_theme_blackTheme"
-                    />
+                    android:orientation="horizontal">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/radioGroupLanguageId"
+                        android:orientation="horizontal">
 
-                    android:id="@+id/settings_toggle_theme_systemTheme"
-                    android:text="@string/settings_option_theme_systemTheme"
+                        <RadioButton
+                            android:id="@+id/settings_toggle_language_spanish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_option_language_spanish" />
 
-                    />
+                        <RadioButton
+                            android:id="@+id/settings_toggle_language_english"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_option_language_english" />
 
-            </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/settings_toggle_language_galician"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_option_language_galician" />
 
-        </LinearLayout>
-    </LinearLayout>
+                    </RadioGroup>
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/settings_layout_bg"
-
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_initialScreenTittle" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_initialScreen_map"
-                    android:text="@string/settings_option_initialScreen_map"
-                    />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_initialScreen_stops"
-                    android:text="@string/settings_option_initialScreen_stops"
-                    />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_initialScreen_lines"
-                    android:text="@string/settings_option_initialScreen_lines"
-                    />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/settings_toggle_initialScreen_home"
-                    android:checked="true"
-
-                    android:text="@string/settings_option_initialScreen_home"
-                    />
-
-            </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
 
 
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/settings_layout_bg"
-
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_launcherOptionsTittle" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/settings_toggle_launcherOptions_showFavoriteStops"
-                android:checked="true"
-
-                android:text="@string/settings_option_launcherOptions_showFavoriteStops"
-                />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="@string/settings_option_launcherOptions_numberOfFavoriteStops"/>
-
-            <androidx.appcompat.widget.SwitchCompat
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/settings_toggle_launcherOptions_showCloseStops"
-                android:checked="true"
-
-                android:text="@string/settings_option_launcherOptions_showCloseStops"
-
-                />
-
-            <EditText
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="@string/settings_option_launcherOptions_numberOfCloseStops"/>
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/settings_layout_bg"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_themeTittle" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/radioGroupThemeId"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_theme_whiteTheme"
+                            android:text="@string/settings_option_theme_whiteTheme"
+
+                            />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_theme_blackTheme"
+                            android:text="@string/settings_option_theme_blackTheme"
+                            />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+
+                            android:id="@+id/settings_toggle_theme_systemTheme"
+                            android:text="@string/settings_option_theme_systemTheme"
+
+                            />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/settings_layout_bg"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_initialScreenTittle" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_initialScreen_map"
+                            android:text="@string/settings_option_initialScreen_map"
+                            />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_initialScreen_stops"
+                            android:text="@string/settings_option_initialScreen_stops"
+                            />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_initialScreen_lines"
+                            android:text="@string/settings_option_initialScreen_lines"
+                            />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/settings_toggle_initialScreen_home"
+                            android:checked="true"
+
+                            android:text="@string/settings_option_initialScreen_home"
+                            />
+
+                    </RadioGroup>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/settings_layout_bg"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_launcherOptionsTittle" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/settings_toggle_launcherOptions_showFavoriteStops"
+                        android:checked="true"
+
+                        android:text="@string/settings_option_launcherOptions_showFavoriteStops"
+                        />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/settings_option_launcherOptions_numberOfFavoriteStops"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/settings_toggle_launcherOptions_showCloseStops"
+                        android:checked="true"
+
+                        android:text="@string/settings_option_launcherOptions_showCloseStops"
+
+                        />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/settings_option_launcherOptions_numberOfCloseStops"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+        
+
+
 
 
 </LinearLayout>

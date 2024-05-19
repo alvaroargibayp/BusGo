@@ -31,6 +31,9 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
 
     private RadioGroup languageRadioGrouo;
 
+    String newLocale = "";
+
+
     public SettingsTab() {
         // Required empty public constructor
     }
@@ -52,7 +55,13 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
         languageRadioGrouo = fragmentSettingsTabBinding.radioGroupLanguageId;
         languageRadioGrouo.setOnCheckedChangeListener(this);
 
+        setDefaultConfig();
+
         return view;
+    }
+
+    void setDefaultConfig() {
+        newLocale = "es";
     }
 
     public void setLocale(String lang) {
@@ -86,12 +95,14 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
             LocaleList localeList = getResources().getConfiguration().getLocales();
             Locale currentLocale = localeList.get(0);
 
-            String newLocale = "";
             if (checkedId == R.id.settings_toggle_language_spanish) {
                 newLocale = "es";
             }
             if (checkedId == R.id.settings_toggle_language_english) {
                 newLocale = "en";
+            }
+            if (checkedId == R.id.settings_toggle_language_galician) {
+                newLocale = "gl";
             }
 
             if (!currentLocale.toString().equals(newLocale))
