@@ -24,7 +24,6 @@
         <item name="sv_buttonText">Siguiente</item>
         <item name="sv_detailTextColor">#00000000</item>
         <item name="sv_detailTextAppearance">@style/CustomText2</item>
-
     </style>
 
     <style name="CustomShowcaseTheme2" parent="ShowcaseView">

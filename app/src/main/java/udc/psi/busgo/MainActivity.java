@@ -11,13 +11,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 import java.util.Objects;
 
 import udc.psi.busgo.databinding.ActivityMainBinding;
-import udc.psi.busgo.userGuide.CustomViewTarget;
 
 public class MainActivity extends AppCompatActivity{
     private ActivityMainBinding binding;
@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity{
         Log.d(TAG, "OnCreate");
         configureTabs();
 
+        showShowcaseStep();
+
+
         if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
             showShowcaseStep();
+
 
 
     }
@@ -58,33 +62,33 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void showShowcaseStep() {
-        CustomViewTarget target;
+        ViewTarget target;
         String title;
         String text;
 
         switch (showcaseStep) {
             case 0:
-                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 100);
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
                 title = getResources().getString(R.string.userGuideMapTabTitle);
                 text = getResources().getString(R.string.userGuideMapTabText);
                 break;
             case 1:
-                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 10);
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
                 title = getResources().getString(R.string.userGuideStopsTabTitle);
                 text = getResources().getString(R.string.userGuideStopsTabText);
                 break;
             case 2:
-                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 15);
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
                 title = getResources().getString(R.string.userGuideHomeTabTitle);
                 text = getResources().getString(R.string.userGuideHomeTabText);
                 break;
             case 3:
-                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 20);
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
                 title = getResources().getString(R.string.userGuideLinesTabTitle);
                 text = getResources().getString(R.string.userGuideLinesTabText);
                 break;
             case 4:
-                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 25);
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
                 title = getResources().getString(R.string.userGuideSettingsTabTitle);
                 text = getResources().getString(R.string.userGuideSettingsTabText);
                 break;
@@ -92,13 +96,16 @@ public class MainActivity extends AppCompatActivity{
                 return;
         }
 
-        userGuide = new ShowcaseView.Builder(this)
+        userGuide = new ShowcaseView.Builder(this, true)
                 .setTarget(target)
                 .setContentTitle(title)
                 .setContentText(text)
                 .hideOnTouchOutside()
                 .setStyle(R.style.BusGoShowcaseTheme)
                 .build();
+
+        userGuide.forceTextPosition(ShowcaseView.BELOW_SHOWCASE);
+
 
         userGuide.setOnShowcaseEventListener(new OnShowcaseEventListener() {
             @Override
