@@ -42,13 +42,8 @@ public class MainActivity extends AppCompatActivity{
         Log.d(TAG, "OnCreate");
         configureTabs();
 
-        showShowcaseStep();
-
-
         if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
             showShowcaseStep();
-
-
 
     }
 
