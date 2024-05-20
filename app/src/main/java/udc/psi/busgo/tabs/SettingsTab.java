@@ -1,12 +1,11 @@
 package udc.psi.busgo.tabs;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.LocaleList;
@@ -14,16 +13,22 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.Button;
 import android.widget.RadioGroup;
 
+import android.content.SharedPreferences;
+
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import java.util.Locale;
+import java.util.Objects;
 
 import udc.psi.busgo.R;
 import udc.psi.busgo.databinding.FragmentSettingsTabBinding;
-import udc.psi.busgo.databinding.FragmentStopsTabBinding;
 
-public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeListener {
+public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     FragmentSettingsTabBinding fragmentSettingsTabBinding;
 
@@ -31,11 +36,16 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
 
     private RadioGroup languageRadioGrouo;
 
+    private Button userGuideButton;
+
     String newLocale = "";
+
+    final String PREFS_NAME = "MyPrefsFile";
 
 
     public SettingsTab() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -55,7 +65,12 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
         languageRadioGrouo = fragmentSettingsTabBinding.radioGroupLanguageId;
         languageRadioGrouo.setOnCheckedChangeListener(this);
 
+        userGuideButton = fragmentSettingsTabBinding.settingsShowUserGuideButtonId;
+        userGuideButton.setOnClickListener(this);
+
         setDefaultConfig();
+
+
 
         return view;
     }
@@ -72,9 +87,6 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
         getActivity().recreate();
-        /*Intent refresh = new Intent(this, AndroidLocalize.class);
-        finish();
-        startActivity(refresh);*/
     }
 
     @Override
@@ -110,4 +122,14 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
         }
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v == userGuideButton) {
+            SharedPreferences settings = requireActivity().getSharedPreferences(PREFS_NAME, 0);
+            settings.edit().putBoolean("my_first_time", true).apply(); // Cambia la variable a false
+            getActivity().recreate();
+        }
+    }
+
 }

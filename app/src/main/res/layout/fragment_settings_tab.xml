@@ -187,8 +187,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/settings_toggle_launcherOptions_showFavoriteStops"
                         android:checked="true"
 
@@ -196,8 +196,8 @@
                         />
 
                     <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:inputType="numberDecimal"
                         android:hint="@string/settings_option_launcherOptions_numberOfFavoriteStops"/>
 
@@ -212,13 +212,39 @@
                         />
 
                     <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:inputType="numberDecimal"
                         android:hint="@string/settings_option_launcherOptions_numberOfCloseStops"/>
 
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/settings_layout_bg">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_showUserGuide" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_showUserGuideButtonText"
+                        android:id="@+id/settings_showUserGuideButtonId">
+                    </Button>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

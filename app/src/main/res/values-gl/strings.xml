@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BusGo</string>
-    <string name="string_lineas">Linea:</string>
-    <string name="home">Fogar</string>
+    <string name="string_lineas">Lineas:</string>
     <string name="home_title">Busqueda unica</string>
     <string name="lines">Lineas</string>
     <string name="stops">Paradas</string>
@@ -29,4 +27,15 @@
     <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas</string>
     <string name="et_buscar">Proporcuna un identificador</string>
     <string name="bt_search_string">Busqueda</string>
+    <string name="settings_showUserGuide">Mostrar guía de usuario (Precisa reinicio)</string>
+    <string name="settings_showUserGuideButtonText">Mostrar</string>
+    <string name="userGuideMapTabTitle">Mapa</string>
+    <string name="userGuideMapTabText">Busca rutas visualmente apoiándote nun mapa.</string>
+    <string name="userGuideStopsTabTitle">Paradas</string>
+    <string name="userGuideLinesTabTitle">Lineas</string>
+    <string name="userGuideSettingsTabTitle">Axustes</string>
+    <string name="userGuideStopsTabText">Visualiza as paradas.</string>
+    <string name="userGuideHomeTabText">Visualiza as paradas cercanas e as favoritas.</string>
+    <string name="userGuideLinesTabText">Visualiza as lineas.</string>
+    <string name="userGuideSettingsTabText">Axusta a aplicación a teu gusto.</string>
 </resources>

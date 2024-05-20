@@ -1,35 +1,37 @@
 package udc.psi.busgo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TabHost;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.tabs.TabItem;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.google.android.material.tabs.TabLayout;
 
-import org.json.JSONObject;
+import java.util.List;
+import java.util.Objects;
 
 import udc.psi.busgo.databinding.ActivityMainBinding;
+import udc.psi.busgo.userGuide.CustomViewTarget;
 
 public class MainActivity extends AppCompatActivity{
-
     private ActivityMainBinding binding;
     private static final String TAG = "_TAG";
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
-
+    ShowcaseView userGuide;
+    List<String> userGuideTitleList;
+    List<String> userGuideTextList;
+    final String PREFS_NAME = "MyPrefsFile";
+    int currentHelper = -1;
+    private int showcaseStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,86 @@ public class MainActivity extends AppCompatActivity{
         setContentView(view);
         Log.d(TAG, "OnCreate");
         configureTabs();
+
+        if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
+            showShowcaseStep();
+
+
     }
+
+    private boolean isFirstTimeOnApp() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        if (settings.getBoolean("my_first_time", true)) { // Si es la primera vez...
+            settings.edit().putBoolean("my_first_time", false).apply(); // Cambia la variable a false
+            return true;
+        }
+        return false;
+    }
+
+    private void showShowcaseStep() {
+        CustomViewTarget target;
+        String title;
+        String text;
+
+        switch (showcaseStep) {
+            case 0:
+                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 100);
+                title = getResources().getString(R.string.userGuideMapTabTitle);
+                text = getResources().getString(R.string.userGuideMapTabText);
+                break;
+            case 1:
+                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 10);
+                title = getResources().getString(R.string.userGuideStopsTabTitle);
+                text = getResources().getString(R.string.userGuideStopsTabText);
+                break;
+            case 2:
+                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 15);
+                title = getResources().getString(R.string.userGuideHomeTabTitle);
+                text = getResources().getString(R.string.userGuideHomeTabText);
+                break;
+            case 3:
+                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 20);
+                title = getResources().getString(R.string.userGuideLinesTabTitle);
+                text = getResources().getString(R.string.userGuideLinesTabText);
+                break;
+            case 4:
+                target = new CustomViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view, 25);
+                title = getResources().getString(R.string.userGuideSettingsTabTitle);
+                text = getResources().getString(R.string.userGuideSettingsTabText);
+                break;
+            default:
+                return;
+        }
+
+        userGuide = new ShowcaseView.Builder(this)
+                .setTarget(target)
+                .setContentTitle(title)
+                .setContentText(text)
+                .hideOnTouchOutside()
+                .setStyle(R.style.BusGoShowcaseTheme)
+                .build();
+
+        userGuide.setOnShowcaseEventListener(new OnShowcaseEventListener() {
+            @Override
+            public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                // Incrementar el paso y mostrar el siguiente ShowcaseView
+                showcaseStep++;
+                showShowcaseStep();
+
+            }
+
+            @Override
+            public void onShowcaseViewDidHide(ShowcaseView showcaseView) {}
+
+            @Override
+            public void onShowcaseViewShow(ShowcaseView showcaseView) {}
+
+            @Override
+            public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {}
+        });
+    }
+
+
 
     void configureTabs(){
 
@@ -86,5 +167,6 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.getTabAt(2).select();
         viewPager.setCurrentItem(2);
     }
+
 }
 
