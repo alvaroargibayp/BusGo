@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.BusGo.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.BusGo.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/stopsWidgetUndefinedStopsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/stopsWidgetUndefinedStopsText"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/stopsWidgetUndefinedStopsButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stopsWidgetUndefinedStopsId"
+        android:layout_centerVertical="false"
+        android:layout_margin="8dp"
+        android:layout_marginTop="-103dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/stopsWidgetUndefinedStopsButtonText"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+</RelativeLayout>
