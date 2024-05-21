@@ -20,7 +20,7 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
     private static final String TAG = "_TAG Line Adapter";
 
     public interface OnLineClickListener{
-        public void OnClick(View view, int position, int lineId, String lineName);
+        public void OnClick(View view, int position, Line line);
     }
 
     private static OnLineClickListener clickListener;
@@ -59,7 +59,7 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
     public static class LineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView name, origin, destination;
-        private int lineId;
+        private Line line;
         public LineViewHolder(@NonNull LineLayoutBinding binding) {
             super(binding.getRoot());
             name = binding.lineName;
@@ -74,12 +74,12 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
             name.setText(line.getName());
             origin.setText(line.getOrigin());
             destination.setText(line.getDestination());
-            lineId = line.getId();
+            this.line = line;
         }
         @Override
         public void onClick(View v) {
             if (clickListener != null){
-                clickListener.OnClick(v, getAdapterPosition(), this.lineId, this.name.getText().toString());
+                clickListener.OnClick(v, getAdapterPosition(), this.line);
             }
         }
     }

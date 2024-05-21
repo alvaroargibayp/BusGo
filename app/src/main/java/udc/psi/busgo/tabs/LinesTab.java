@@ -113,9 +113,9 @@ public class LinesTab extends Fragment {
 
         lineAdapter.setClickListener(new LineAdapter.OnLineClickListener() {
             @Override
-            public void OnClick(View view, int position, int lineId, String lineName) {
-                Log.d(TAG, "Seleccionada la linea " + lineName + " de id " + lineId);
-                Fragment lineDetail = LineDetail.newInstance(lineId, lineName);
+            public void OnClick(View view, int position, Line line) {
+                Log.d(TAG, "Seleccionada la linea " + line.getName() + " de id " + line.getId());
+                Fragment lineDetail = LineDetail.newInstance(line);
                 if (detailSelection != null){
                     detailSelection.seeDetail(lineDetail);
                 }

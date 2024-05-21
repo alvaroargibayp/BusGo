@@ -34,22 +34,19 @@ import udc.psi.busgo.tabs.MapTab;
 
 public class LineDetail extends Fragment implements View.OnClickListener {
     private static final String TAG = "_TAG Line Detail";
-    private static final String LINE_ID_PARAM = "lineIdParam";
-    private static final String LINE_NAME_PARAM = "lineNameParam";
+    private static final String LINE_PARAM = "lineNameParam";
     FragmentLineDetailBinding binding;
     LineDetailAdapter lineDetailAdapter;
     RecyclerView recyclerView;
     TextView tv_response_placeholder;
     TextView detailTittle;
 
-    private int lineId;
-    private String lineName;
+    private Line line;
 
-    public static LineDetail newInstance(int lineId, String lineName){
+    public static LineDetail newInstance(Line line){
         LineDetail fragment = new LineDetail();
         Bundle bundle = new Bundle();
-        bundle.putInt(LINE_ID_PARAM, lineId);
-        bundle.putString(LINE_NAME_PARAM, lineName);
+        bundle.putParcelable(LINE_PARAM, line);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -58,8 +55,7 @@ public class LineDetail extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            lineId = getArguments().getInt(LINE_ID_PARAM);
-            lineName = getArguments().getString(LINE_NAME_PARAM);
+            line = getArguments().getParcelable(LINE_PARAM);
         }
     }
     @Override
@@ -73,7 +69,7 @@ public class LineDetail extends Fragment implements View.OnClickListener {
         binding = FragmentLineDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setLayout();
-        searchSpecificLine(lineId);
+        searchSpecificLine(line.getId());
         return view;
     }
     private void setLayout(){
@@ -82,7 +78,7 @@ public class LineDetail extends Fragment implements View.OnClickListener {
         tv_response_placeholder = binding.tvResponsePlaceholder;
         detailTittle = binding.tvLineDetailTittle;
 
-        detailTittle.setText("Linea " + lineName);
+        detailTittle.setText("Linea " + line.getName());
 
     }
 
