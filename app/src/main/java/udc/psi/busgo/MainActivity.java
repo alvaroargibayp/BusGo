@@ -14,7 +14,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.List;
 import java.util.Objects;
 
 import udc.psi.busgo.databinding.ActivityMainBinding;
@@ -27,10 +26,7 @@ public class MainActivity extends AppCompatActivity{
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
     ShowcaseView userGuide;
-    List<String> userGuideTitleList;
-    List<String> userGuideTextList;
     final String PREFS_NAME = "MyPrefsFile";
-    int currentHelper = -1;
     private int showcaseStep = 0;
 
     @Override
