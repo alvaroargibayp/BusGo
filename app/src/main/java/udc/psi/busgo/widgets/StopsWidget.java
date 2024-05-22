@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 
 import java.util.Random;
 
+import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
 
 public class StopsWidget extends AppWidgetProvider {
@@ -33,6 +34,10 @@ public class StopsWidget extends AppWidgetProvider {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.stopsWidgetUndefinedStopsButton, pendingIntent);
+
+        Intent openAppIntent = new Intent(context, MainActivity.class);
+        PendingIntent openAppPendingIntent = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        views.setOnClickPendingIntent(R.id.stopsWidgetId, openAppPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

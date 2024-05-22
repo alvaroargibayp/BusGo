@@ -2,7 +2,8 @@
     style="@style/Widget.BusGo.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.BusGo.AppWidgetContainer">
+    android:theme="@style/Theme.BusGo.AppWidgetContainer"
+    android:id="@+id/stopsWidgetId">
 
     <TextView
         android:id="@+id/stopsWidgetUndefinedStopsId"
