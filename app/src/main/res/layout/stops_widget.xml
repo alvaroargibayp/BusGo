@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.BusGo.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,8 @@
         android:id="@+id/stopsWidgetUndefinedStopsId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/stopsWidgetUndefinedStopsText"
@@ -20,10 +23,69 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/stopsWidgetUndefinedStopsId"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/stopsWidgetUndefinedStopsButtonText"
         android:textSize="12sp"
         android:textStyle="bold|italic" />
+
+    <!-- Nombre de la parada -->
+    <TextView
+        android:id="@+id/stopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/stopsWidgetStopName"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/stopsWidgetStopNameAccDesc" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/stopName"
+        android:id="@+id/infoLayout"
+
+        >
+        <!-- Número de línea -->
+        <TextView
+            android:id="@+id/lineNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stopsWidgetLineNumber"
+            android:layout_marginEnd="120dp"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/stopsWidgetLineNumberAccesDesc" />
+
+        <!-- Tiempo restante para el próximo bus -->
+        <TextView
+            android:id="@+id/remainingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/stopsWidgetTimeRemainingAccesDesc"
+            android:text="@string/stopsWidgetTimeRemaining"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <!-- Botón para actualizar la información -->
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/infoLayout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/stopsWidgetUpdateButton"
+        android:textSize="10sp"
+        android:contentDescription="@string/stopsWidgetUpdateButtonAccesDesc"
+        tools:ignore="SmallSp" />
+
 </RelativeLayout>
