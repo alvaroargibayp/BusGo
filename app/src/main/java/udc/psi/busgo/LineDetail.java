@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +39,6 @@ public class LineDetail extends Fragment implements View.OnClickListener {
     FragmentLineDetailBinding binding;
     LineDetailAdapter lineDetailAdapter;
     RecyclerView recyclerView;
-    TextView tv_response_placeholder;
     TextView detailTittle;
 
     private Line line;
@@ -75,7 +75,6 @@ public class LineDetail extends Fragment implements View.OnClickListener {
     private void setLayout(){
         recyclerView = binding.linesRv;
         initRecycler();
-        tv_response_placeholder = binding.tvResponsePlaceholder;
         detailTittle = binding.tvLineDetailTittle;
 
         detailTittle.setText("Linea " + line.getName());
@@ -102,15 +101,32 @@ public class LineDetail extends Fragment implements View.OnClickListener {
 
                             Log.d(TAG, respuestaRecortada);
                             try {
+                                addStop("Ida: ", new double[]{0.1, 0.1});
                                 JSONObject jsonObject = new JSONObject(respuestaRecortada);
-                                tv_response_placeholder.setText(jsonObject.toString());
+                                JSONArray jsonArray = jsonObject.getJSONArray("features");
+                                for (int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject currentStop = (JSONObject) jsonArray.get(i);
+                                    JSONObject stopProperties = currentStop.getJSONObject("properties");
+                                    JSONObject stopGeometry = currentStop.getJSONObject("geometry");
+                                    String name = stopProperties.getString("name");
+                                    String popupContent = stopProperties.getString("popupContent");
+                                    if (!name.equals(popupContent)){
+                                        Log.d(TAG, "Discrepancia entre nombre y popupContent en al posicion "+ i);
+                                    }
+                                    if (!stopGeometry.getString("type").equals("Point")){
+                                        Log.d(TAG, "Tipo de parada distinta a punto en "+ i);
+                                    }
+                                    JSONArray coordsArray = stopGeometry.getJSONArray("coordinates");
+                                    double[] coords = new double[2];
+                                    coords[0] = coordsArray.getDouble(0);
+                                    coords[1] = coordsArray.getDouble(1);
+                                    addStop(name, coords);
+                                }
+
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
-
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -124,15 +140,16 @@ public class LineDetail extends Fragment implements View.OnClickListener {
         requestQueue.add(stringRequest);
     }
 
-    private void initRecycler() {
-
-        //TODO borrar despues
-        ArrayList<String> stops = new ArrayList<String>();
-        for (int i = 0; i < 10; i++){
-            stops.add("Parada " + i);
+    private void addStop(String name, double[] coords) {
+        if (name.equals(line.getDestination())) {
+            lineDetailAdapter.addDestinationStop(name, coords);
+        } else {
+            lineDetailAdapter.addStop(name, coords);
         }
+    }
 
-        lineDetailAdapter = new LineDetailAdapter(stops);
+    private void initRecycler() {
+        lineDetailAdapter = new LineDetailAdapter();
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);

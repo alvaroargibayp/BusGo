@@ -30,6 +30,10 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
         this.stopsList = stopsList;
     }
 
+    public LineDetailAdapter() {
+        this.stopsList = new ArrayList<>();
+    }
+
     @NonNull
     @Override
     public LineDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,22 +51,30 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
         return stopsList.size();
     }
 
-    public static class LineDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class LineDetailViewHolder extends RecyclerView.ViewHolder{
 
         public TextView name;
         public LineDetailViewHolder(@NonNull LineDetailLayoutPlaceholderBinding binding) {
             super(binding.getRoot());
             name = binding.stopName;
-            binding.getRoot().setOnClickListener(this);
         }
 
         public void bind(String stop){
             name.setText(stop);
         }
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(v.getContext(), "No toques", Toast.LENGTH_SHORT).show();
-        }
+    }
+
+    public void addStop(String name, double[] coords){
+        stopsList.add(name);
+        notifyItemInserted(getItemCount());
+    }
+    public void addDestinationStop(String name, double[] coords){
+        stopsList.add(name);
+        notifyItemInserted(getItemCount());
+        stopsList.add("Vuelta: ");
+        notifyItemInserted(getItemCount());
+        stopsList.add(name);
+        notifyItemInserted(getItemCount());
     }
 
 }
