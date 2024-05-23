@@ -45,13 +45,13 @@
     <string name="app_widget_description">This is an app widget description</string>
     <string name="stopsWidgetUndefinedStopsText">Sincroniza el widget con una parada</string>
     <string name="stopsWidgetUndefinedStopsButtonText">+</string>
-    <string name="stopsWidgetStopName">Parada: Campus Elviña</string>
+    <string name="stopsWidgetStopName">Campus Elviña</string>
     <string name="stopsWidgetStopNameAccDesc">Nombre de la parada</string>
-    <string name="stopsWidgetLineNumber">Línea: 5</string>
+    <string name="stopsWidgetLineNumber">24A</string>
     <string name="stopsWidgetLineNumberAccesDesc">Número de línea del próximo autobús</string>
     <string name="stopsWidgetTimeRemainingAccesDesc">Tiempo restante para el próximo autobús</string>
-    <string name="stopsWidgetTimeRemaining">Tiempo restante: 5 min</string>
-    <string name="stopsWidgetUpdateButton">Actualizar</string>
+    <string name="stopsWidgetTimeRemaining">5 minutos</string>
+    <string name="stopsWidgetUpdateButton">X</string>
     <string name="stopsWidgetUpdateButtonAccesDesc">Botón para actualizar la información del widget</string>
 
 </resources>
