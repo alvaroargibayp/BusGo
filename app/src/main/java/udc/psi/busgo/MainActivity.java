@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TabHost;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.Request;
@@ -20,15 +21,26 @@ import com.google.android.material.tabs.TabLayout;
 import org.json.JSONObject;
 
 import udc.psi.busgo.databinding.ActivityMainBinding;
+import udc.psi.busgo.tabs.HomeTab;
+import udc.psi.busgo.tabs.LinesTab;
+import udc.psi.busgo.tabs.MapTab;
+import udc.psi.busgo.tabs.SettingsTab;
+import udc.psi.busgo.tabs.StopsTab;
 
 public class MainActivity extends AppCompatActivity{
 
     private ActivityMainBinding binding;
-    private static final String TAG = "_TAG";
+    private static final String TAG = "_TAG Main Activity";
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
+
+    HomeTab homeTab;
+    LinesTab linesTab;
+    MapTab mapTab;
+    SettingsTab settingsTab;
+    StopsTab stopsTab;
 
 
     @Override
@@ -47,16 +59,25 @@ public class MainActivity extends AppCompatActivity{
         tabLayout = binding.tabLayout;
         viewPager = binding.viewPager;
 
-        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPagerAdapter = new ViewPagerAdapter(this, new LinesTab.DetailSelection() {
+            @Override
+            public void seeDetail(Fragment lineDetail) {
+                viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
+                viewPager.setCurrentItem(6, false);
+            }
+        });
         viewPager.setAdapter(viewPagerAdapter);
-
-
 
         // Comportamiento de las pestañas
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                Log.d(TAG, "Seleccionada la pestaña " + tab.getPosition() + "\n Pestaña actual " + viewPager.getCurrentItem());
+                if (viewPager.getCurrentItem() == 5){
+                    viewPager.setCurrentItem(tab.getPosition(), false);
+                } else{
+                viewPager.setCurrentItem(tab.getPosition(), true);
+                }
             }
 
             @Override
@@ -66,7 +87,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                viewPager.setCurrentItem(tab.getPosition(), false);
             }
         });
 
@@ -85,7 +106,8 @@ public class MainActivity extends AppCompatActivity{
 
         // Ajustar el tab y el pager para que la primera pantalla sea el home
         tabLayout.getTabAt(2).select();
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(2, false);
     }
+
 }
 
