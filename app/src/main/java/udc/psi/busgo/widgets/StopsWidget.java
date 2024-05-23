@@ -3,8 +3,10 @@ package udc.psi.busgo.widgets;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -16,17 +18,12 @@ import udc.psi.busgo.R;
 public class StopsWidget extends AppWidgetProvider {
 
     private static final String ACTION_UPDATE_WIDGET = "ACTION_UPDATE_WIDGET";
-    private static final CharSequence[] refreshStrings = {"AAAAAAAAA", "BBBBBBBBBBB", "CCCCCCCCCCC"};
+    static private CharSequence stopName;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        int index = new Random().nextInt(refreshStrings.length);
-        CharSequence stringText = refreshStrings[index];
-        Log.d("_TAG23", "UPDATEEEEEEEEEEEEEEEE");
-        Log.d("_TAG23", (String) stringText);
-        Log.d("_TAG23", String.valueOf(index));
-
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stops_widget);
-        views.setTextViewText(R.id.stopsWidgetUndefinedStopsId, stringText);
+
+        views.setTextViewText(R.id.stopName, stopName);
 
         Intent intent = new Intent(context, StopsWidget.class);
         intent.setAction(ACTION_UPDATE_WIDGET);
@@ -53,10 +50,23 @@ public class StopsWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
+
+
         //Actualiza el widget correspondiente
         if (ACTION_UPDATE_WIDGET.equals(intent.getAction())) {
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            stopName = intent.getStringExtra("KEY_STOP_NAME");
+
+            if (stopName != null) {
+                //Log.d("_TAGWIDGET", "Received extra: " + stopName);
+
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                updateAppWidget(context, appWidgetManager, appWidgetId);
+            }
+
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                Log.d("_TAG23", "MIIIIIIIIIIIIIIIMA");
+
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 updateAppWidget(context, appWidgetManager, appWidgetId);
             }
