@@ -1,0 +1,144 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.BusGo.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.BusGo.AppWidgetContainer"
+    android:id="@+id/stopsWidgetId">
+
+    <TextView
+        android:id="@+id/stopsWidgetUndefinedStopsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/stopsWidgetUndefinedStopsText"
+        android:textSize="12sp"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/stopsWidgetUndefinedStopsButton"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/stopsWidgetUndefinedStopsId"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/stopsWidgetUndefinedStopsButtonText"
+        android:textSize="12sp"
+        android:textStyle="bold|italic" />
+
+    <!-- Nombre de la parada -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/headerLayout">
+
+        <TextView
+            android:id="@+id/stopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="182dp"
+            android:contentDescription="@string/stopsWidgetStopNameAccDesc"
+            android:text="@string/stopsWidgetStopName"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Botón para actualizar la información -->
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/stopsWidgetUpdateButtonAccesDesc"
+            android:text="@string/stopsWidgetUpdateButton"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/headerLayout"
+        android:id="@+id/infoLayout"
+        android:layout_marginBottom="8dp"
+        >
+        <!-- Número de línea -->
+        <TextView
+            android:id="@+id/lineNumber"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stopsWidgetLineNumber"
+            android:textAlignment="center"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/graygreen"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:contentDescription="@string/stopsWidgetLineNumberAccesDesc" />
+
+        <!-- Tiempo restante para el próximo bus -->
+        <TextView
+            android:id="@+id/remainingTime"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/stopsWidgetTimeRemainingAccesDesc"
+            android:text="@string/stopsWidgetTimeRemaining"
+            android:textStyle="bold"
+            android:textSize="12sp" />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/infoLayout"
+        android:id="@+id/infoNextStopsLayout"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/nextlineNumber"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stopsWidgetLineNumber"
+            android:textAlignment="center"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/graygreen"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:contentDescription="@string/stopsWidgetLineNumberAccesDesc" />
+
+        <TextView
+            android:id="@+id/nextlineNumber2"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stopsWidgetLineNumber"
+            android:textAlignment="center"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/graygreen"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:contentDescription="@string/stopsWidgetLineNumberAccesDesc" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
