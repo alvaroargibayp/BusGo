@@ -2,11 +2,17 @@
 package udc.psi.busgo.tabs;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -44,16 +50,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
 import udc.psi.busgo.objects.Line;
 
-public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener {
+public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener, GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
     Marker originMarker = null;
     Marker destinationMarker = null;
 
     Button searchButton;
 
     List<LatLng> stopsCoordsList = new ArrayList<>();
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    private boolean permissionDenied = false;
     public void placeMarker(GoogleMap googleMap, LatLng latLng, int which) {
         MarkerOptions markerOptions=new MarkerOptions();
         // Set position of marker
@@ -82,6 +94,11 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         if (v == searchButton) {
 
         }
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+
     }
 
     public interface OnMapClickedListener {
@@ -258,11 +275,15 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                     }
                 });
 
+                googleMap.setOnMyLocationButtonClickListener(MapFragment.this);
+                googleMap.setOnMyLocationClickListener(MapFragment.this);
+                enableMyLocation(googleMap);
+
                 LatLngBounds cityBounds = new LatLngBounds(
                         new LatLng(43.33920463853277, -8.437498363975866), // Suroeste de la ciudad (latitud, longitud)
                         new LatLng(43.39274161525237, -8.379991804710077)); // Noreste de la ciudad (latitud, longitud)
 
-                googleMap.setLatLngBoundsForCameraTarget(cityBounds);
+                //googleMap.setLatLngBoundsForCameraTarget(cityBounds);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cityBounds.getCenter(), 12));
 
                 googleMap.setMinZoomPreference(12);
@@ -272,6 +293,23 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         });
         // Return view
         return view;
+    }
+
+    @SuppressLint("MissingPermission")
+    private void enableMyLocation(GoogleMap googleMap) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            if (mainActivity.checkLocationPermission())
+                googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(requireActivity().getApplicationContext(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
     }
 
     void searchAllStops(){

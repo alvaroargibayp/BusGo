@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         Log.d(TAG, "OnCreate");
 
 
-        checkLocationPermission();
+        //checkLocationPermission();
 
         configureTabs();
 
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
 
 
 
-    private void checkLocationPermission() {
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PERMISSION_GRANTED) {
@@ -164,7 +164,9 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
 
         if (!mLocationPermissionGranted) {
             Log.d("_TAG", "Error loading Navigation SDK: The user has not granted location permission.");
+            return false;
         }
+        return true;
     }
 
     @Override
