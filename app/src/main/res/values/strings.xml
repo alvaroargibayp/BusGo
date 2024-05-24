@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">BusGo</string>
+    <string name="app_name" translatable="false">BusGo</string>
     <string name="string_lineas">Lineas:</string>
-    <string name="home">Home</string>
+    <string name="home" translatable="false">Home</string>
     <string name="home_title">Busqueda individual</string>
     <string name="lines">Líneas</string>
     <string name="stops">Paradas</string>
@@ -18,6 +18,7 @@
     <string name="settings_option_initialScreen_lines">Lineas</string>
     <string name="settings_option_language_spanish">Español</string>
     <string name="settings_option_language_english">Ingles</string>
+    <string name="settings_option_language_galician">Gallego</string>
     <string name="settings_option_theme_blackTheme">Oscuro</string>
     <string name="settings_option_theme_whiteTheme">Claro</string>
     <string name="settings_option_theme_systemTheme">Sistema</string>
@@ -27,6 +28,18 @@
     <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas a mostrar</string>
     <string name="et_buscar">Introduce un id</string>
     <string name="bt_search_string">Buscar</string>
+    <string name="settings_showUserGuide">Mostrar guia de usuario\n(Requiere reinicio)</string>
+    <string name="settings_showUserGuideButtonText">Mostrar</string>
+    <string name="userGuideMapTabTitle">Mapa</string>
+    <string name="userGuideMapTabText">Busca rutas visualmente apoyandote en un mapa.</string>
+    <string name="userGuideStopsTabTitle">Paradas</string>
+    <string name="userGuideHomeTabTitle" translatable="false">Home</string>
+    <string name="userGuideLinesTabTitle">Lineas</string>
+    <string name="userGuideSettingsTabTitle">Ajustes</string>
+    <string name="userGuideStopsTabText">Visualiza las paradas.</string>
+    <string name="userGuideHomeTabText">Visualiza paradas cercanas y favoritas</string>
+    <string name="userGuideLinesTabText">Visualiza las lineas</string>
+    <string name="userGuideSettingsTabText">Configura la aplicación a tu gusto</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

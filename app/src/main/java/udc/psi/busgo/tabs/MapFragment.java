@@ -50,9 +50,7 @@ import udc.psi.busgo.objects.Line;
 public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener {
     Marker originMarker = null;
     Marker destinationMarker = null;
-
     Button searchButton;
-
     List<LatLng> stopsCoordsList = new ArrayList<>();
     public void placeMarker(GoogleMap googleMap, LatLng latLng, int which) {
         MarkerOptions markerOptions=new MarkerOptions();
@@ -243,7 +241,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         searchButton = view.findViewById(R.id.searchRoutesButtonId);
         searchButton.setOnClickListener(this);
 
-        searchAllStops();
+        //searchAllStops();
 
         // Async map
         assert supportMapFragment != null;
@@ -267,7 +265,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
                 googleMap.setMinZoomPreference(12);
 
-                setUpBusStops(googleMap);
+                //setUpBusStops(googleMap);
             }
         });
         // Return view

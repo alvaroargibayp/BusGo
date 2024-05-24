@@ -3,42 +3,34 @@ package udc.psi.busgo;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TabHost;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-import org.json.JSONObject;
+import java.util.Objects;
 
 import udc.psi.busgo.databinding.ActivityMainBinding;
-import udc.psi.busgo.tabs.MapFragment;
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
+import udc.psi.busgo.tabs.MapFragment;
 import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
@@ -61,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     SettingsTab settingsTab;
     StopsTab stopsTab;
 
+    ShowcaseView userGuide;
+    final String PREFS_NAME = "MyPrefsFile";
+    private int showcaseStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +69,88 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         checkLocationPermission();
 
         configureTabs();
+
+        if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
+            showShowcaseStep();
+
     }
+
+    private boolean isFirstTimeOnApp() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        if (settings.getBoolean("my_first_time", true)) { // Si es la primera vez...
+            settings.edit().putBoolean("my_first_time", false).apply(); // Cambia la variable a false
+            return true;
+        }
+        return false;
+    }
+
+    private void showShowcaseStep() {
+        ViewTarget target;
+        String title;
+        String text;
+
+        switch (showcaseStep) {
+            case 0:
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
+                title = getResources().getString(R.string.userGuideMapTabTitle);
+                text = getResources().getString(R.string.userGuideMapTabText);
+                break;
+            case 1:
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
+                title = getResources().getString(R.string.userGuideStopsTabTitle);
+                text = getResources().getString(R.string.userGuideStopsTabText);
+                break;
+            case 2:
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
+                title = getResources().getString(R.string.userGuideHomeTabTitle);
+                text = getResources().getString(R.string.userGuideHomeTabText);
+                break;
+            case 3:
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
+                title = getResources().getString(R.string.userGuideLinesTabTitle);
+                text = getResources().getString(R.string.userGuideLinesTabText);
+                break;
+            case 4:
+                target = new ViewTarget(Objects.requireNonNull(tabLayout.getTabAt(showcaseStep)).view);
+                title = getResources().getString(R.string.userGuideSettingsTabTitle);
+                text = getResources().getString(R.string.userGuideSettingsTabText);
+                break;
+            default:
+                return;
+        }
+
+        userGuide = new ShowcaseView.Builder(this, true)
+                .setTarget(target)
+                .setContentTitle(title)
+                .setContentText(text)
+                .hideOnTouchOutside()
+                .setStyle(R.style.BusGoShowcaseTheme)
+                .build();
+
+        userGuide.forceTextPosition(ShowcaseView.BELOW_SHOWCASE);
+
+
+        userGuide.setOnShowcaseEventListener(new OnShowcaseEventListener() {
+            @Override
+            public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                // Incrementar el paso y mostrar el siguiente ShowcaseView
+                showcaseStep++;
+                showShowcaseStep();
+
+            }
+
+            @Override
+            public void onShowcaseViewDidHide(ShowcaseView showcaseView) {}
+
+            @Override
+            public void onShowcaseViewShow(ShowcaseView showcaseView) {}
+
+            @Override
+            public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {}
+        });
+    }
+
+
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
@@ -186,5 +262,6 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         alertDialog.show();
 
     }
+
 }
 
