@@ -27,5 +27,13 @@
     <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas a mostrar</string>
     <string name="et_buscar">Introduce un id</string>
     <string name="bt_search_string">Buscar</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="map_id">cf896573b56113e1</string>
+    <string name="setOriginMarker">Colocar origin</string>
+    <string name="setDestinationMarker">Colocar destino</string>
+    <string name="BuscarRutas">Buscar rutas</string>
 
 </resources>
