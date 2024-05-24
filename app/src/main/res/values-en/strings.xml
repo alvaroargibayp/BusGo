@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_lineas">Lines:</string>
+    <string name="home_title">Unique search</string>
+    <string name="lines">Lines</string>
+    <string name="stops">Stops</string>
+    <string name="map">Map</string>
+    <string name="settings">Settings</string>
+    <string name="string_stops">Stops:</string>
+    <string name="settings_themeTittle">Theme</string>
+    <string name="settings_languageTittle">Language</string>
+    <string name="settings_initialScreenTittle">Home screen</string>
+    <string name="settings_launcherOptionsTittle">Launcher settings</string>
+    <string name="settings_option_initialScreen_home">Home (Default)</string>
+    <string name="settings_option_initialScreen_map">Map</string>
+    <string name="settings_option_initialScreen_stops">Stops</string>
+    <string name="settings_option_initialScreen_lines">Lines</string>
+    <string name="settings_option_language_spanish">Spanish</string>
+    <string name="settings_option_language_english">English</string>
+    <string name="settings_option_language_galician">Galician</string>
+    <string name="settings_option_theme_blackTheme">Dark</string>
+    <string name="settings_option_theme_whiteTheme">White</string>
+    <string name="settings_option_theme_systemTheme">System</string>
+    <string name="settings_option_launcherOptions_showFavoriteStops">Show favorite stops</string>
+    <string name="settings_option_launcherOptions_showCloseStops">Show close stops</string>
+    <string name="settings_option_launcherOptions_numberOfCloseStops">Number of close stops</string>
+    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Number of favorite stops</string>
+    <string name="et_buscar">Give an id</string>
+    <string name="bt_search_string">Search</string>
+    <string name="settings_showUserGuide">Show user guide (Restart is needed)</string>
+    <string name="settings_showUserGuideButtonText">Show</string>
+    <string name="userGuideMapTabTitle">Map</string>
+    <string name="userGuideMapTabText">Visually search for bus routes with the help of a map.</string>
+    <string name="userGuideStopsTabTitle">Stops</string>
+    <string name="userGuideLinesTabTitle">Lines</string>
+    <string name="userGuideSettingsTabTitle">Settings</string>
+    <string name="userGuideStopsTabText">Visualize the stops.</string>
+    <string name="userGuideHomeTabText">Visualize close stops and favorite stops.</string>
+    <string name="userGuideLinesTabText">Visualize bus lines.</string>
+    <string name="userGuideSettingsTabText">Adjust the application to your liking.</string>
+</resources>

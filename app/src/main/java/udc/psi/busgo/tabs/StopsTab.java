@@ -24,7 +24,7 @@ import udc.psi.busgo.databinding.FragmentStopsTabBinding;
 
 
 public class StopsTab extends Fragment {
-    private static final String TAG = "_TAG";
+    private static final String TAG = "_TAG Stops Tab";
     FragmentStopsTabBinding binding;
 
 
@@ -51,7 +51,7 @@ public class StopsTab extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("_TAG", response.toString());
+                        Log.d(TAG, response.toString());
                         binding.tvStopsContent.setText(response.toString());
                     }
                 },

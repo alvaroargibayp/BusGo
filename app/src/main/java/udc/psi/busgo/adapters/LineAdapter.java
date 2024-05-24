@@ -1,5 +1,6 @@
 package udc.psi.busgo.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,26 @@ import udc.psi.busgo.objects.Line;
 
 public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder> {
 
+    private static final String TAG = "_TAG Line Adapter";
+
+    public interface OnLineClickListener{
+        public void OnClick(View view, int position, Line line);
+    }
+
+    private static OnLineClickListener clickListener;
+    public void setClickListener(OnLineClickListener lineClickListener){
+        clickListener = lineClickListener;
+    }
+
     private LineLayoutBinding binding;
 
     private ArrayList<Line> lineList;
 
     public LineAdapter(ArrayList<Line> lineList) {
         this.lineList = lineList;
+    }
+    public LineAdapter() {
+        this.lineList = new ArrayList<>();
     }
 
     @NonNull
@@ -44,22 +59,33 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
     public static class LineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView name, origin, destination;
+        private Line line;
         public LineViewHolder(@NonNull LineLayoutBinding binding) {
             super(binding.getRoot());
             name = binding.lineName;
             origin = binding.lineOrigin;
             destination = binding.lineDestination;
+            binding.getRoot().setOnClickListener(this);
         }
 
         public void bind(Line line){
+            //Log.d(TAG, "Bind line:\n Name: " + line.getName() + "\n Origin: " + line.getOrigin()
+            //        + "\n Destination: " + line.getDestination());
             name.setText(line.getName());
             origin.setText(line.getOrigin());
             destination.setText(line.getDestination());
+            this.line = line;
         }
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), "No toques", Toast.LENGTH_SHORT).show();
+            if (clickListener != null){
+                clickListener.OnClick(v, getAdapterPosition(), this.line);
+            }
         }
+    }
+    public void addLine(Line line){
+        lineList.add(line);
+        notifyItemInserted(getItemCount());
     }
 
 }

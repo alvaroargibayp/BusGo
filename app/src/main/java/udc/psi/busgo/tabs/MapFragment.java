@@ -243,7 +243,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         searchButton = view.findViewById(R.id.searchRoutesButtonId);
         searchButton.setOnClickListener(this);
 
-        searchAllStops();
+        //searchAllStops();
 
         // Async map
         assert supportMapFragment != null;
@@ -267,7 +267,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
                 googleMap.setMinZoomPreference(12);
 
-                setUpBusStops(googleMap);
+                //setUpBusStops(googleMap);
             }
         });
         // Return view
