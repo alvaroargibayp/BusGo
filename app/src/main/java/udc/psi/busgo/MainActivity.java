@@ -30,12 +30,11 @@ import java.util.Objects;
 import udc.psi.busgo.databinding.ActivityMainBinding;
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
-import udc.psi.busgo.tabs.MapFragment;
 import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener {
+public class MainActivity extends AppCompatActivity implements MapTab.OnMapClickedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private ActivityMainBinding binding;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
 
     HomeTab homeTab;
     LinesTab linesTab;
-    MapTab mapTab;
     SettingsTab settingsTab;
     StopsTab stopsTab;
 
@@ -251,11 +249,11 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
                 // the user clicked on colors[which]
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                MapFragment mapFragment = (MapFragment) fragmentManager
+                MapTab mapTab = (MapTab) fragmentManager
                         .findFragmentByTag("f0");
 
-                assert mapFragment != null;
-                mapFragment.placeMarker(googleMap, latLng, which);
+                assert mapTab != null;
+                mapTab.placeMarker(googleMap, latLng, which);
             }
         });
 

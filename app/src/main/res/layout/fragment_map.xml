@@ -7,7 +7,7 @@
     android:id="@+id/fragmentMap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tabs.MapFragment">
+    tools:context=".tabs.MapTab">
 
     <fragment
         android:layout_width="match_parent"
