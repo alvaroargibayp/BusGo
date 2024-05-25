@@ -24,7 +24,7 @@ import udc.psi.busgo.databinding.FragmentHomeTabBinding;
 
 public class HomeTab extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "_TAG";
+    private static final String TAG = "_TAG Home Tab";
     FragmentHomeTabBinding binding;
 
     @Override
@@ -33,7 +33,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         binding = FragmentHomeTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.btnSearch.setOnClickListener(this);
-
         return view;
     }
 
@@ -67,7 +66,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("_TAG", response.toString());
+                        Log.d(TAG, response.toString());
                         binding.tvSearchContent.setText(response.toString());
                     }
                 },

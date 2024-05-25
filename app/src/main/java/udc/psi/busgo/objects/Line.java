@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 public class Line implements Parcelable {
 
+    private static final String TAG = "_TAG Line";
     private String color, destination, name, origin;
     private int id;
 

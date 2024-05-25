@@ -29,7 +29,7 @@ import udc.psi.busgo.objects.Stop;
 
 
 public class StopsTab extends Fragment {
-    private static final String TAG = "_TAG Stops Tabw";
+    private static final String TAG = "_TAG Stops Tab";
     FragmentStopsTabBinding binding;
 
     StopAdapter stopAdapter;

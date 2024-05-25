@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,22 +27,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import udc.psi.busgo.LineDetail;
 import udc.psi.busgo.R;
 import udc.psi.busgo.adapters.LineAdapter;
+import udc.psi.busgo.databinding.FragmentLineDetailBinding;
 import udc.psi.busgo.databinding.FragmentLinesTabBinding;
 import udc.psi.busgo.objects.Line;
 
 
 public class LinesTab extends Fragment {
 
-    private static final String TAG = "_TAG";
-    FragmentLinesTabBinding binding;
+    public interface DetailSelection{
+        public void seeDetail(Fragment lineDetail);
+    }
+    DetailSelection detailSelection;
 
+    public void setDetailSelection(DetailSelection detailSelection){
+        this.detailSelection = detailSelection;
+
+    }
+
+    private static final String TAG = "_TAG Lines Tab";
+    FragmentLinesTabBinding binding;
     LineAdapter lineAdapter;
     RecyclerView recyclerView;
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +60,8 @@ public class LinesTab extends Fragment {
         binding = FragmentLinesTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         recyclerView = binding.linesRv;
+        initRecycler();
         searchAllLines();
-
         return view;
     }
 
@@ -65,10 +76,9 @@ public class LinesTab extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("_TAG", response.toString());
+                        //Log.d(TAG, response.toString());
                         //binding.tvLineasContent.setText(response.toString());
                         try {
-                            ArrayList<Line> lines = new ArrayList<Line>();
                             for (int i = 0; i < response.getJSONArray("lineas").length(); i++){
                                 JSONObject currentObject = (JSONObject) response.getJSONArray("lineas").get(i);
                                 Line line = new Line(currentObject.get("color").toString(),
@@ -76,10 +86,8 @@ public class LinesTab extends Fragment {
                                                      currentObject.get("nombre").toString(),
                                                      currentObject.get("origen").toString(),
                                                      Integer.parseInt(currentObject.get("id").toString()));
-                                lines.add(line);
+                                addLine(line);
                             }
-                            initRecycler(lines);
-
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -96,11 +104,26 @@ public class LinesTab extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void initRecycler(ArrayList<Line> lines) {
-        lineAdapter = new LineAdapter(lines);
+    private void initRecycler() {
+        lineAdapter = new LineAdapter();
         LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setAdapter(lineAdapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        lineAdapter.setClickListener(new LineAdapter.OnLineClickListener() {
+            @Override
+            public void OnClick(View view, int position, Line line) {
+                Log.d(TAG, "Seleccionada la linea " + line.getName() + " de id " + line.getId());
+                Fragment lineDetail = LineDetail.newInstance(line);
+                if (detailSelection != null){
+                    detailSelection.seeDetail(lineDetail);
+                }
+            }
+        });
+    }
+
+    private void addLine(Line line){
+        lineAdapter.addLine(line);
     }
 }
