@@ -1,13 +1,14 @@
 package udc.psi.busgo.tabs;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,16 +17,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import udc.psi.busgo.R;
-import udc.psi.busgo.databinding.FragmentLinesTabBinding;
+import java.util.ArrayList;
+
+import udc.psi.busgo.adapters.StopAdapter;
 import udc.psi.busgo.databinding.FragmentStopsTabBinding;
+import udc.psi.busgo.objects.Stop;
 
 
 public class StopsTab extends Fragment {
     private static final String TAG = "_TAG Stops Tab";
     FragmentStopsTabBinding binding;
+
+    StopAdapter stopAdapter;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -35,13 +43,15 @@ public class StopsTab extends Fragment {
 
         binding = FragmentStopsTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        recyclerView = binding.stopsRv;
+        initRecycler();
         searchAllStops();
 
         return view;
     }
 
     void searchAllStops(){
-        Log.d(TAG, "searchAllStops");
+        Log.d(TAG, "searchStops");
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -51,8 +61,31 @@ public class StopsTab extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
-                        binding.tvStopsContent.setText(response.toString());
+                        Log.d("_TAG", response.toString());
+                        //binding.tvStopsContent.setText(response.toString());
+                        try {
+                            for (int i = 0; i < response.getJSONArray("paradas").length(); i++){
+                                JSONObject currentObject = (JSONObject) response.getJSONArray("paradas").get(i);
+                                JSONArray coordsArray = currentObject.getJSONArray("coords");
+                                double[] coords = new double[2];
+                                coords[0] = coordsArray.getDouble(0);
+                                coords[1] = coordsArray.getDouble(1);
+                                try{
+                                    long osmId = currentObject.getLong("osmid");
+                                    Stop stop = new Stop(coords,
+                                            Integer.parseInt(currentObject.get("id").toString()),
+                                            currentObject.get("nombre").toString(),
+                                            osmId);
+                                    addStop(stop);
+                                } catch (Exception e){
+                                    Log.d(TAG, "Error en bucle " + i);
+                                }
+
+                            }
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -64,5 +97,17 @@ public class StopsTab extends Fragment {
         );
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void initRecycler() {
+        stopAdapter = new StopAdapter();
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(stopAdapter);
+    }
+
+    private void addStop(Stop stop) {
+        stopAdapter.addStop(stop);
     }
 }

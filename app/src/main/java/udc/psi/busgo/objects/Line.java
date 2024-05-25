@@ -29,7 +29,6 @@ public class Line implements Parcelable {
 
     public static final Creator<Line> CREATOR = new Creator<Line>() {
 
-
         @Override
         public Line createFromParcel(Parcel in) {
             return new Line(in);
