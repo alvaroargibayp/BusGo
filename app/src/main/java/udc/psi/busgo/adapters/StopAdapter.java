@@ -49,7 +49,7 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
 
     public static class StopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView name, coords, osmcoords;
+        public TextView name, coords;
         public StopViewHolder(@NonNull StopLayoutBinding binding) {
             super(binding.getRoot());
             name = binding.stopName;
