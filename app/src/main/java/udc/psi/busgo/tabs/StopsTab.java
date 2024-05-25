@@ -29,7 +29,7 @@ import udc.psi.busgo.objects.Stop;
 
 
 public class StopsTab extends Fragment {
-    private static final String TAG = "_TAG";
+    private static final String TAG = "_TAG Stops Tabw";
     FragmentStopsTabBinding binding;
 
     StopAdapter stopAdapter;
@@ -44,6 +44,7 @@ public class StopsTab extends Fragment {
         binding = FragmentStopsTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         recyclerView = binding.stopsRv;
+        initRecycler();
         searchAllStops();
 
         return view;
@@ -63,27 +64,24 @@ public class StopsTab extends Fragment {
                         Log.d("_TAG", response.toString());
                         //binding.tvStopsContent.setText(response.toString());
                         try {
-                            ArrayList<Stop> stops = new ArrayList<Stop>();
                             for (int i = 0; i < response.getJSONArray("paradas").length(); i++){
                                 JSONObject currentObject = (JSONObject) response.getJSONArray("paradas").get(i);
                                 JSONArray coordsArray = currentObject.getJSONArray("coords");
-                                int[] coords = new int[2];
-                                coords[0] = coordsArray.getInt(0);
-                                coords[1] = coordsArray.getInt(1);
-                                String osmidStr = currentObject.get("osmid").toString();
-                                long osmid;
-                                if (osmidStr != null && !osmidStr.equals("null")) {
-                                    osmid = Long.parseLong(osmidStr);
-                                } else {
-                                    osmid = 0;
+                                double[] coords = new double[2];
+                                coords[0] = coordsArray.getDouble(0);
+                                coords[1] = coordsArray.getDouble(1);
+                                try{
+                                    long osmId = currentObject.getLong("osmid");
+                                    Stop stop = new Stop(coords,
+                                            Integer.parseInt(currentObject.get("id").toString()),
+                                            currentObject.get("nombre").toString(),
+                                            osmId);
+                                    addStop(stop);
+                                } catch (Exception e){
+                                    Log.d(TAG, "Error en bucle " + i);
                                 }
-                                Stop stop = new Stop(coords,
-                                        Integer.parseInt(currentObject.get("id").toString()),
-                                        currentObject.get("nombre").toString(),
-                                        osmid);
-                                stops.add(stop);
+
                             }
-                            initRecycler(stops);
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -101,11 +99,15 @@ public class StopsTab extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void initRecycler(ArrayList<Stop> stops) {
-        stopAdapter = new StopAdapter(stops);
+    private void initRecycler() {
+        stopAdapter = new StopAdapter();
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(stopAdapter);
+    }
+
+    private void addStop(Stop stop) {
+        stopAdapter.addStop(stop);
     }
 }

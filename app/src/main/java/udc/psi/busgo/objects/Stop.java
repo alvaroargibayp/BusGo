@@ -7,14 +7,14 @@ import androidx.annotation.NonNull;
 
 public class Stop implements Parcelable{
 
-    private int[] coords, osmcoords;
+    private double[] coords, osmcoords;
     private Line[] lines;
     private String name;
     private int id;
     private long osmid;
     private boolean[] properties;
 
-    public Stop(int[] coords , int id, Line[] lines, String name, int[] osmcoords, long osmid, boolean[] properties) {
+    public Stop(double[] coords , int id, Line[] lines, String name, double[] osmcoords, long osmid, boolean[] properties) {
         this.coords = coords;
         this.lines = lines;
         this.name = name;
@@ -25,7 +25,7 @@ public class Stop implements Parcelable{
     }
 
     // Sin Lines, ni Properties, ni Osmcoords
-    public Stop(int[] coords , int id, String name, long osmid) {
+    public Stop(double[] coords , int id, String name, long osmid) {
         this.coords = coords;
         this.name = name;
         this.osmid = osmid;
@@ -33,16 +33,15 @@ public class Stop implements Parcelable{
     }
 
     protected Stop(Parcel in) {
-        coords = in.createIntArray();
+        coords = in.createDoubleArray();
         id = in.readInt();
         lines = in.createTypedArray(Line.CREATOR);
         name = in.readString();
-        osmcoords = in.createIntArray();
+        osmcoords = in.createDoubleArray();
         properties = in.createBooleanArray();
     }
 
     public static final Creator<Stop> CREATOR = new Creator<Stop>() {
-
 
         @Override
         public Stop createFromParcel(Parcel in) {
@@ -62,16 +61,16 @@ public class Stop implements Parcelable{
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeIntArray(coords);
+        dest.writeDoubleArray(coords);
         dest.writeInt(id);
         dest.writeTypedArray(lines, flags);
         dest.writeString(name);
-        dest.writeIntArray(osmcoords);
+        dest.writeDoubleArray(osmcoords);
         dest.writeLong(osmid);
         dest.writeBooleanArray(properties);
     }
 
-    public int[] getCoords() {
+    public double[] getCoords() {
         return coords;
     }
 
@@ -87,7 +86,7 @@ public class Stop implements Parcelable{
         return properties;
     }
 
-    public int[] getOsmcoords() {
+    public double[] getOsmcoords() {
         return osmcoords;
     }
 
