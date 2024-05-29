@@ -35,12 +35,12 @@ import udc.psi.busgo.objects.Stop;
 
 public class StopsTab extends Fragment {
 
-    public interface DetailSelection{
-        public void seeDetail(Fragment stopDetail);
+    public interface StopDetailSelection{
+        public void seeStopDetail(Fragment stopDetail);
     }
-    StopsTab.DetailSelection detailSelection;
+    StopDetailSelection detailSelection;
 
-    public void setDetailSelection(StopsTab.DetailSelection detailSelection){
+    public void setDetailSelection(StopDetailSelection detailSelection){
         this.detailSelection = detailSelection;
 
     }
@@ -70,10 +70,10 @@ public class StopsTab extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            detailSelection = (DetailSelection) context;
+            detailSelection = (StopDetailSelection) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " implement OnMapClickedListener");
+                    + " implement StopDetailSelection");
         }
     }
 
@@ -144,7 +144,7 @@ public class StopsTab extends Fragment {
                 Log.d(TAG, "Seleccionada la parada " + stop.getName() + " de id " + stop.getId());
                 Fragment stopDetail = StopDetail.newInstance(stop);
                 if (detailSelection != null){
-                    detailSelection.seeDetail(stopDetail);
+                    detailSelection.seeStopDetail(stopDetail);
                 }
             }
         });
