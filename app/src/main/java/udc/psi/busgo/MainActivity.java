@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
         setContentView(view);
         Log.d(TAG, "OnCreate");
 
-
         //checkLocationPermission();
 
         configureTabs();

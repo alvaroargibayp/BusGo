@@ -15,10 +15,6 @@ public class BusStopClusterRenderer extends DefaultClusterRenderer<BusStopCluste
         super(context, map, clusterManager);
     }
 
-    @Override
-    protected int getColor(int clusterSize) {
-        return Color.MAGENTA;// Return any color you want here. You can base it on clusterSize.
-    }
 
     @Override
     protected void onBeforeClusterItemRendered(BusStopClusterItem item, MarkerOptions markerOptions) {

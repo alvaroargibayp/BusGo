@@ -2,6 +2,9 @@
 package udc.psi.busgo.tabs;
 
 
+import static udc.psi.busgo.StringUtils.decompress;
+import static udc.psi.busgo.WorkerMap.RECIVE_TASK_KEY;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
@@ -18,12 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import androidx.lifecycle.Observer;
+import androidx.work.WorkInfo;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,26 +33,34 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.maps.android.clustering.ClusterManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
+import udc.psi.busgo.WorkerMap;
 import udc.psi.busgo.objects.BusStopClusterItem;
 import udc.psi.busgo.objects.BusStopClusterRenderer;
-import udc.psi.busgo.objects.Line;
 
 public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener, GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+    private static final String TASK_KEY = "Input_TASK_KEY";
     Marker originMarker = null;
     Marker destinationMarker = null;
     Button searchButton;
     List<LatLng> stopsCoordsList = new ArrayList<>();
+    WorkManager workManager;
+    volatile boolean workerEnded = false;
 
     // Declare a variable for the cluster manager.
     private ClusterManager<BusStopClusterItem> clusterManager;
@@ -76,7 +84,7 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     private void addItemsToCluster() {
 
         // Set some lat/lng coordinates to start with.
-        double lat = 43.33920463853277;
+        /*double lat = 43.33920463853277;
         double lng = -8.437498363975866;
         // Add ten cluster items in close proximity, for purposes of this example.
         for (int i = 0; i < 10; i++) {
@@ -84,6 +92,11 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
             lat = lat + offset;
             lng = lng + offset;
             BusStopClusterItem offsetItem = new BusStopClusterItem(lat, lng, "Title " + i, "Snippet " + i);
+            clusterManager.addItem(offsetItem);
+        }*/
+
+        for (LatLng coords : stopsCoordsList) {
+            BusStopClusterItem offsetItem = new BusStopClusterItem(coords.latitude, coords.longitude, "Title " + coords.latitude, "Snippet " + coords.longitude);
             clusterManager.addItem(offsetItem);
         }
     }
@@ -170,16 +183,20 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Initialize view
         Log.d("_TAG", "TGAAGADGDAFA: " + getTag());
 
         View view=inflater.inflate(R.layout.fragment_map, container, false);
 
+        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(WorkerMap.class).build();
+
+        WorkManager workManager1 = WorkManager.getInstance(requireActivity().getApplicationContext());
+        workManager1.enqueue(workRequest);
+
         // Initialize map fragment
         SupportMapFragment supportMapFragment=(SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
-
-        //searchAllStops();
 
         // Async map
         assert supportMapFragment != null;
@@ -194,6 +211,35 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                     }
                 });
 
+
+                workManager1.getWorkInfoByIdLiveData(workRequest.getId())
+                        .observe(getViewLifecycleOwner(), new Observer<WorkInfo>() {
+                            @Override
+                            public void onChanged(WorkInfo workInfo) {
+                                try {
+                                    if (workInfo.getState().isFinished()) {
+                                        // Task has finished, display the output data
+                                        String jsonLatLngList = workInfo.getOutputData().getString(RECIVE_TASK_KEY);
+                                        jsonLatLngList = decompress(jsonLatLngList);
+
+                                        Gson gson = new Gson();
+
+                                        Type latLngListType = new TypeToken<List<LatLng>>() {}.getType();
+                                        stopsCoordsList = gson.fromJson(jsonLatLngList, latLngListType);
+
+                                        Log.d("_TAG2", "AAAAAAAAA: " + stopsCoordsList.toString());
+
+
+                                        setUpClusterer(googleMap);
+                                    }
+                                } catch (NullPointerException e) {
+                                    Log.e("TAG", "onChanged: " + e.getLocalizedMessage());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+
                 googleMap.setOnMyLocationButtonClickListener(MapTab.this);
                 googleMap.setOnMyLocationClickListener(MapTab.this);
                 enableMyLocation(googleMap); // Si el usuario da permisos de localización, dibujar el boton de ir a ubicacion
@@ -205,10 +251,9 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                 //googleMap.setLatLngBoundsForCameraTarget(cityBounds);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cityBounds.getCenter(), 12));
 
-                googleMap.setMinZoomPreference(12);
+                //googleMap.setMinZoomPreference(12);
 
                 //setUpBusStops(googleMap);
-                setUpClusterer(googleMap);
             }
         });
         // Return view
