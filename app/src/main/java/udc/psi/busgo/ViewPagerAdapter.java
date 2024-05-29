@@ -20,6 +20,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     private static final String TAG = "_TAG View Pager Adapter";
 
     LineDetail lineDetail;
+    StopDetail stopDetail;
     LinesTab.DetailSelection detailSelection;
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, LinesTab.DetailSelection detailSelection) {
@@ -46,6 +47,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new SettingsTab();
             case 5:
                 return lineDetail;
+            case 6:
+                return stopDetail;
             default:
                 return new HomeTab();
         }
@@ -55,6 +58,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public void setLineDetail(LineDetail lineDetail){
         this.lineDetail = lineDetail;
         notifyItemChanged(5);
+    }
+
+    public void setStopDetail(StopDetail stopDetail){
+        this.stopDetail = stopDetail;
+        notifyItemChanged(6);
     }
     @Override
     public int getItemCount() {

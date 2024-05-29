@@ -1,5 +1,6 @@
 package udc.psi.busgo.tabs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +64,17 @@ public class StopsTab extends Fragment {
         searchAllStops();
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            detailSelection = (DetailSelection) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " implement OnMapClickedListener");
+        }
     }
 
     void searchAllStops(){
