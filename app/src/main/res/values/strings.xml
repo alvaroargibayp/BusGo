@@ -61,5 +61,6 @@
     <string name="setOriginMarker">Colocar origin</string>
     <string name="setDestinationMarker">Colocar destino</string>
     <string name="BuscarRutas">Buscar rutas</string>
+    <string name="string_paradas">Paradas:</string>
 
 </resources>
