@@ -41,6 +41,9 @@ import udc.psi.busgo.objects.Line;
 public class LineDetail extends Fragment implements View.OnClickListener {
     private static final String TAG = "_TAG Line Detail";
     private static final String LINE_PARAM = "lineNameParam";
+
+    private static final String WORKER_PARAM_TEST = "workerParamTest";
+    private static final String WORKER_OUTPUT_TEST = "workerOutputTest";
     FragmentLineDetailBinding binding;
     LineDetailAdapter lineDetailAdapter;
     RecyclerView recyclerView;
@@ -306,22 +309,23 @@ public class LineDetail extends Fragment implements View.OnClickListener {
 
             Context context = getApplicationContext();
 
-            int n = getInputData().getInt("KEYAAAA", 0);
+            int n = getInputData().getInt(WORKER_PARAM_TEST, 0);
             Log.d(TAG, "doing work " + n);
-            return Result.success();
+            Data salida = new Data.Builder().putString(WORKER_OUTPUT_TEST,"hola").build();
+            return Result.success(salida);
         }
     }
     public void probarWorker(){
 
         Log.d(TAG, "probarWorker");
         OneTimeWorkRequest testRequest = new OneTimeWorkRequest.Builder(BusSearch.class).setInputData(createInputDataForBusSearch(4)).build();
-        workManager.enqueue(OneTimeWorkRequest.from(BusSearch.class));
+        workManager.enqueue(testRequest);
 
     }
 
     private Data createInputDataForBusSearch(int n) {
         Data.Builder builder = new Data.Builder();
-        builder.putInt("KEYAAAA", n);
+        builder.putInt(WORKER_PARAM_TEST, n);
         return builder.build();
     }
 
