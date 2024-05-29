@@ -15,6 +15,7 @@ import udc.psi.busgo.LineDetail;
 import udc.psi.busgo.databinding.FragmentLineDetailBinding;
 import udc.psi.busgo.databinding.LineDetailLayoutPlaceholderBinding;
 import udc.psi.busgo.databinding.LineLayoutBinding;
+import udc.psi.busgo.objects.Bus;
 import udc.psi.busgo.objects.Line;
 
 public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.LineDetailViewHolder> {
@@ -77,4 +78,12 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
         notifyItemInserted(getItemCount());
     }
 
+    public void addBus(Bus bus, String stopName){
+        for(int i = 0; i < stopsList.size(); i++){
+            if (stopsList.get(i).equals(stopName)){
+                stopsList.add(i, stopName + "*");
+                notifyItemChanged(i);
+            }
+        }
+    }
 }

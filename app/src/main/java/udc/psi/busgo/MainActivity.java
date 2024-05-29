@@ -17,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.work.Configuration;
+import androidx.work.WorkManager;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         checkLocationPermission();
 
         configureTabs();
+
 
         if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
             showShowcaseStep();
