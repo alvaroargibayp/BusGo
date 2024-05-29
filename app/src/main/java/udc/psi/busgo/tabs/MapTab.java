@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,8 @@ import java.util.List;
 
 import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
+import udc.psi.busgo.objects.BusStopClusterItem;
+import udc.psi.busgo.objects.BusStopClusterRenderer;
 import udc.psi.busgo.objects.Line;
 
 public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener, GoogleMap.OnMyLocationButtonClickListener,
@@ -50,6 +53,41 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     Marker destinationMarker = null;
     Button searchButton;
     List<LatLng> stopsCoordsList = new ArrayList<>();
+
+    // Declare a variable for the cluster manager.
+    private ClusterManager<BusStopClusterItem> clusterManager;
+
+    private void setUpClusterer(GoogleMap googleMap) {
+        // Position the map.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        clusterManager = new ClusterManager<BusStopClusterItem>(requireActivity().getApplicationContext(), googleMap);
+        clusterManager.setRenderer(new BusStopClusterRenderer(requireActivity().getApplicationContext(), googleMap, clusterManager));
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        googleMap.setOnCameraIdleListener(clusterManager);
+        googleMap.setOnMarkerClickListener(clusterManager);
+
+        // Add cluster items (markers) to the cluster manager.
+        addItemsToCluster();
+    }
+    private void addItemsToCluster() {
+
+        // Set some lat/lng coordinates to start with.
+        double lat = 43.33920463853277;
+        double lng = -8.437498363975866;
+        // Add ten cluster items in close proximity, for purposes of this example.
+        for (int i = 0; i < 10; i++) {
+            double offset = i / 60d;
+            lat = lat + offset;
+            lng = lng + offset;
+            BusStopClusterItem offsetItem = new BusStopClusterItem(lat, lng, "Title " + i, "Snippet " + i);
+            clusterManager.addItem(offsetItem);
+        }
+    }
+
     public void placeMarker(GoogleMap googleMap, LatLng latLng, int which) {
         MarkerOptions markerOptions=new MarkerOptions();
         markerOptions.position(latLng);
@@ -141,9 +179,6 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
         SupportMapFragment supportMapFragment=(SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
 
-        searchButton = view.findViewById(R.id.searchRoutesButtonId);
-        searchButton.setOnClickListener(this);
-
         //searchAllStops();
 
         // Async map
@@ -173,6 +208,7 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                 googleMap.setMinZoomPreference(12);
 
                 //setUpBusStops(googleMap);
+                setUpClusterer(googleMap);
             }
         });
         // Return view

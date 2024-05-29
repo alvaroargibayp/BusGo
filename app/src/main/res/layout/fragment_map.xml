@@ -17,13 +17,6 @@
         android:tag="mapFragmentTag"
         class="com.google.android.gms.maps.SupportMapFragment"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchRoutesButtonId"
-        android:text="@string/BuscarRutas"
-        android:layout_margin="16dp"/>
-
 
 
 

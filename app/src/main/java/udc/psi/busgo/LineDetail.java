@@ -36,12 +36,14 @@ public class LineDetail extends Fragment implements View.OnClickListener {
 
     private Line line;
 
+
     public static LineDetail newInstance(Line line){
         LineDetail fragment = new LineDetail();
         Bundle bundle = new Bundle();
         bundle.putParcelable(LINE_PARAM, line);
         fragment.setArguments(bundle);
         return fragment;
+
     }
 
     @Override
@@ -50,6 +52,8 @@ public class LineDetail extends Fragment implements View.OnClickListener {
         if (getArguments() != null) {
             line = getArguments().getParcelable(LINE_PARAM);
         }
+
+        requireActivity().getApplicationContext();
     }
     @Override
     public void onClick(View v) {
