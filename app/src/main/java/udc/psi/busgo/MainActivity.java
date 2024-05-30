@@ -37,7 +37,7 @@ import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener, LinesTab.LineDetailSelection {
+public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener, StopsTab.StopDetailSelection, LinesTab.LineDetailSelection {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private ActivityMainBinding binding;
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d(TAG, "Seleccionada la pestaña " + tab.getPosition() + "\n Pestaña actual " + viewPager.getCurrentItem());
-                if (viewPager.getCurrentItem() == 5){
+                if (viewPager.getCurrentItem() >= 5){
                     viewPager.setCurrentItem(tab.getPosition(), false);
                 } else{
                 viewPager.setCurrentItem(tab.getPosition(), true);
@@ -261,9 +261,15 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     }
 
     @Override
+    public void seeStopDetail(Fragment stopDetail) {
+        viewPagerAdapter.setStopDetail((StopDetail) stopDetail);
+        viewPager.setCurrentItem(7, false);
+
+    @Override
     public void seeLineDetail(Fragment lineDetail) {
         viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
         viewPager.setCurrentItem(6,false);
+
     }
 }
 

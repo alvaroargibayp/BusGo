@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class Stop implements Parcelable{
 
     private double[] coords, osmcoords;
@@ -30,10 +32,10 @@ public class Stop implements Parcelable{
     }
 
     // Sin Lines, ni Properties, ni Osmcoords
-    public Stop(double[] coords , int id, String name, long osmid) {
+    public Stop(double[] coords , int id, String name, Line[] lines) {
         this.coords = coords;
         this.name = name;
-        this.osmid = osmid;
+        this.lines = lines;
         this.id = id;
     }
 

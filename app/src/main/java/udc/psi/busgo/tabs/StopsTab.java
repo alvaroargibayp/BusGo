@@ -1,5 +1,6 @@
 package udc.psi.busgo.tabs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +24,27 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import udc.psi.busgo.LineDetail;
+import udc.psi.busgo.StopDetail;
+import udc.psi.busgo.adapters.LineAdapter;
 import udc.psi.busgo.adapters.StopAdapter;
 import udc.psi.busgo.databinding.FragmentStopsTabBinding;
+import udc.psi.busgo.objects.Line;
 import udc.psi.busgo.objects.Stop;
 
 
 public class StopsTab extends Fragment {
+
+    public interface StopDetailSelection{
+        public void seeStopDetail(Fragment stopDetail);
+    }
+    StopDetailSelection detailSelection;
+
+    public void setDetailSelection(StopDetailSelection detailSelection){
+        this.detailSelection = detailSelection;
+
+    }
+
     private static final String TAG = "_TAG Stops Tab";
     FragmentStopsTabBinding binding;
 
@@ -48,6 +64,17 @@ public class StopsTab extends Fragment {
         searchAllStops();
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            detailSelection = (StopDetailSelection) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " implement StopDetailSelection");
+        }
     }
 
     void searchAllStops(){
@@ -70,12 +97,18 @@ public class StopsTab extends Fragment {
                                 double[] coords = new double[2];
                                 coords[0] = coordsArray.getDouble(0);
                                 coords[1] = coordsArray.getDouble(1);
+                                ArrayList<Line> stopLines = new ArrayList<>();
+                                for (int j = 0; j < currentObject.getJSONArray("lineas").length(); j++){
+                                    JSONObject currentLine = (JSONObject) currentObject.getJSONArray("lineas").get(j);
+                                    stopLines.add(new Line(
+                                            currentLine.get("color").toString(), currentLine.get("nombre").toString(), Integer.parseInt(currentLine.get("id").toString())));
+                                }
                                 try{
-                                    long osmId = currentObject.getLong("osmid");
                                     Stop stop = new Stop(coords,
                                             Integer.parseInt(currentObject.get("id").toString()),
                                             currentObject.get("nombre").toString(),
-                                            osmId);
+                                            stopLines.toArray(new Line[0])
+                                            );
                                     addStop(stop);
                                 } catch (Exception e){
                                     Log.d(TAG, "Error en bucle " + i);
@@ -105,6 +138,16 @@ public class StopsTab extends Fragment {
                 new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(stopAdapter);
+        stopAdapter.setClickListener(new StopAdapter.OnStopClickListener() {
+            @Override
+            public void OnClick(View view, int position, Stop stop) {
+                Log.d(TAG, "Seleccionada la parada " + stop.getName() + " de id " + stop.getId());
+                Fragment stopDetail = StopDetail.newInstance(stop);
+                if (detailSelection != null){
+                    detailSelection.seeStopDetail(stopDetail);
+                }
+            }
+        });
     }
 
     private void addStop(Stop stop) {

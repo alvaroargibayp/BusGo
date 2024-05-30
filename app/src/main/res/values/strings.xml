@@ -7,7 +7,7 @@
     <string name="stops">Paradas</string>
     <string name="map">Mapa</string>
     <string name="settings">Ajustes</string>
-    <string name="string_stops">Paradas:</string>
+    <string name="string_stops">Parada:</string>
     <string name="settings_themeTittle">Tema</string>
     <string name="settings_languageTittle">Idioma</string>
     <string name="settings_initialScreenTittle">Pantalla de inicio</string>
@@ -61,5 +61,8 @@
     <string name="setOriginMarker">Colocar origin</string>
     <string name="setDestinationMarker">Colocar destino</string>
     <string name="BuscarRutas">Buscar rutas</string>
+    <string name="string_paradas">Paradas:</string>
+    <string name="string_coords">Coordenadas:</string>
+    <string name="string_conect_lines">Líneas que conecta:</string>
 
 </resources>

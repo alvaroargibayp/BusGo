@@ -13,9 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import udc.psi.busgo.databinding.StopLayoutBinding;
+import udc.psi.busgo.objects.Line;
 import udc.psi.busgo.objects.Stop;
 
 public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder> {
+
+    public interface OnStopClickListener{
+        public void OnClick(View view, int position, Stop stop);
+    }
+
+    private static StopAdapter.OnStopClickListener clickListener;
+    public void setClickListener(StopAdapter.OnStopClickListener stopClickListener){
+        clickListener = stopClickListener;
+    }
 
     private static final String TAG = "_TAG Stop Adapter";
 
@@ -50,10 +60,12 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
     public static class StopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView name, coords;
+        private Stop stop;
         public StopViewHolder(@NonNull StopLayoutBinding binding) {
             super(binding.getRoot());
             name = binding.stopName;
             coords = binding.stopCoords;
+            binding.getRoot().setOnClickListener(this);
         }
 
         public void bind(Stop stop){
@@ -64,10 +76,13 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
             double[] coordsArray = stop.getCoords();
 
             coords.setText(coordsArray[0] + " " + coordsArray[1]);
+            this.stop = stop;
         }
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), "No toques", Toast.LENGTH_SHORT).show();
+            if (clickListener != null){
+                clickListener.OnClick(v, getAdapterPosition(), this.stop);
+            }
         }
     }
 
