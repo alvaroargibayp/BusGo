@@ -18,6 +18,7 @@ import udc.psi.busgo.databinding.LineDetailLayoutPlaceholderBinding;
 import udc.psi.busgo.databinding.LineLayoutBinding;
 import udc.psi.busgo.objects.Bus;
 import udc.psi.busgo.objects.Line;
+import udc.psi.busgo.objects.Stop;
 
 public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.LineDetailViewHolder> {
 
@@ -25,10 +26,9 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
 
     private LineDetailLayoutPlaceholderBinding binding;
 
-    private ArrayList<String> stopsList;
+    private ArrayList<Stop> stopsList;
 
-    //TODO cambiar string por la implementacion de las paradas
-    public LineDetailAdapter(ArrayList<String> stopsList) {
+    public LineDetailAdapter(ArrayList<Stop> stopsList) {
         this.stopsList = stopsList;
     }
 
@@ -61,31 +61,21 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
             name = binding.stopName;
         }
 
-        public void bind(String stop){
-            name.setText(stop);
+        public void bind(Stop stop){
+            name.setText(stop.getName());
         }
     }
 
-    public void addStop(String name, double[] coords){
-        stopsList.add(name);
-        notifyItemInserted(getItemCount());
-    }
-    public void addDestinationStop(String name, double[] coords){
-        Log.d(TAG, "Final de linea detectado");
-        stopsList.add(name);
-        notifyItemInserted(getItemCount());
-        stopsList.add("Vuelta: ");
-        notifyItemInserted(getItemCount());
-        stopsList.add(name);
+    public void addStop(Stop stop){
+        stopsList.add(stop);
         notifyItemInserted(getItemCount());
     }
 
     public void addBus(Bus bus, String stopName){
-        Log.d(TAG, "addBus: " + stopName);
         for(int i = 0; i < stopsList.size(); i++){
-            if (stopsList.get(i).equals(stopName)){
-                Log.d(TAG, "Parada encontrada: " + stopName);
-                stopsList.set(i, stopName + "*");
+            if (stopsList.get(i).getName().equals(stopName)){
+                Stop stop = stopsList.get(i);
+                stop.setName(stopName + "*");
                 notifyItemChanged(i);
             }
         }

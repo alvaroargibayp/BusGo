@@ -42,6 +42,7 @@ import udc.psi.busgo.adapters.LineDetailAdapter;
 import udc.psi.busgo.databinding.FragmentLineDetailBinding;
 import udc.psi.busgo.objects.Bus;
 import udc.psi.busgo.objects.Line;
+import udc.psi.busgo.objects.Stop;
 import udc.psi.busgo.workers.JSONRequestWorker;
 import udc.psi.busgo.workers.StringRequestWorker;
 
@@ -56,6 +57,9 @@ public class LineDetail extends Fragment{
     ArrayList<Bus> buses;
     WorkManager workManager;
     private Line line;
+    private boolean working;
+    private int countDown;
+    private Stop lastStop;
 
     public static LineDetail newInstance(Line line){
         LineDetail fragment = new LineDetail();
@@ -96,6 +100,10 @@ public class LineDetail extends Fragment{
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if (line != null && !working ){
+                    searchBusesInALine(line.getId());
+                    working = true;
+                }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -114,24 +122,32 @@ public class LineDetail extends Fragment{
 
     private void searchStopNames(){
         int size = buses.size();
+        countDown = size;
         Log.d(TAG, "Search stop name size: " + size);
         for (Bus bus : buses){
             searchStopNameById(bus.getStopId(), bus);
         }
     }
 
-    private void addStop(String name, double[] coords) {
-        if (name.equals(line.getDestination())) {
-            lineDetailAdapter.addDestinationStop(name, coords);
+    private void addStop(Stop stop) {
+        if (lastStop != null){
+            if (lastStop.getName().equals(stop.getName())) {
+                lineDetailAdapter.addStop(new Stop(new double[]{0.1, 0.1}, "Vuelta: "));
+                lineDetailAdapter.addStop(stop);
+            } else {
+                lineDetailAdapter.addStop(stop);
+                lastStop = stop;
+            }
         } else {
-            lineDetailAdapter.addStop(name, coords);
+            lineDetailAdapter.addStop(stop);
+            lastStop = stop;
         }
     }
 
     private void processJsonLineStops(String Json){
         Log.d(TAG, "Processing Line Stops Json");
         try {
-            addStop("Ida: ", new double[]{0.1, 0.1});
+            addStop(new Stop(new double[]{0.1, 0.1}, "Ida: "));
             JSONObject jsonObject = new JSONObject(Json);
             JSONArray jsonArray = jsonObject.getJSONArray("features");
             for (int i = 0; i < jsonArray.length(); i++){
@@ -150,7 +166,8 @@ public class LineDetail extends Fragment{
                 double[] coords = new double[2];
                 coords[0] = coordsArray.getDouble(0);
                 coords[1] = coordsArray.getDouble(1);
-                addStop(name, coords);
+                Stop stop = new Stop(coords, name);
+                addStop(stop);
             }
             searchBusesInALine(line.getId());
 
@@ -209,8 +226,13 @@ public class LineDetail extends Fragment{
         }
         try {
             String stopName = Json.getString("nombre");
-            Log.d(TAG, "stopName: " + stopName);
+            countDown = countDown -1;
+            Log.d(TAG, "stopName: " + stopName + countDown);
             lineDetailAdapter.addBus(bus, stopName);
+
+            if (countDown == 0){
+                working = false;
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
