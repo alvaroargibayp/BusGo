@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class LinesTab extends Fragment {
     FragmentLinesTabBinding binding;
     LineAdapter lineAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +62,13 @@ public class LinesTab extends Fragment {
         binding = FragmentLinesTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         recyclerView = binding.linesRv;
+        swipeRefreshLayout = binding.swipeRefresh;
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         initRecycler();
         searchAllLines();
         return view;

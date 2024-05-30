@@ -1,5 +1,6 @@
 package udc.psi.busgo.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
         notifyItemInserted(getItemCount());
     }
     public void addDestinationStop(String name, double[] coords){
+        Log.d(TAG, "Final de linea detectado");
         stopsList.add(name);
         notifyItemInserted(getItemCount());
         stopsList.add("Vuelta: ");
@@ -79,9 +81,11 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
     }
 
     public void addBus(Bus bus, String stopName){
+        Log.d(TAG, "addBus: " + stopName);
         for(int i = 0; i < stopsList.size(); i++){
             if (stopsList.get(i).equals(stopName)){
-                stopsList.add(i, stopName + "*");
+                Log.d(TAG, "Parada encontrada: " + stopName);
+                stopsList.set(i, stopName + "*");
                 notifyItemChanged(i);
             }
         }
