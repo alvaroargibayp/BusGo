@@ -37,17 +37,15 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new StopsTab();
             case 2:
-                return new HomeTab();
-            case 3:
                 return new LinesTab();
-            case 4:
+            case 3:
                 return new SettingsTab();
-            case 5:
+            case 4:
                 return lineDetail;
-            case 6:
+            case 5:
                 return stopDetail;
             default:
-                return new HomeTab();
+                return new MapFragment();
         }
     }
 
@@ -63,7 +61,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     }
     @Override
     public int getItemCount() {
-        return 7;
+        return 6;
     }
 
 }
