@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class MapTab extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentMapTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
 
         stop1Button = binding.buttonParada1;
         stop1Button.setOnClickListener(this);

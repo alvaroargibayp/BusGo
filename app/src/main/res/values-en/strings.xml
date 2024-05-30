@@ -40,4 +40,5 @@
     <string name="userGuideSettingsTabText">Adjust the application to your liking.</string>
     <string name="string_coords">Coordinates:</string>
     <string name="string_conect_lines">Lines connected:</string>
+    <string name="string_line_separator">-</string>
 </resources>

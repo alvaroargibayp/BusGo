@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import udc.psi.busgo.LineDetail;
+import udc.psi.busgo.R;
 import udc.psi.busgo.StopDetail;
 import udc.psi.busgo.adapters.LineAdapter;
 import udc.psi.busgo.adapters.StopAdapter;
@@ -59,6 +61,7 @@ public class StopsTab extends Fragment {
 
         binding = FragmentStopsTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
         recyclerView = binding.stopsRv;
         initRecycler();
         searchAllStops();

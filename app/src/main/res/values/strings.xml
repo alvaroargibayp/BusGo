@@ -64,5 +64,6 @@
     <string name="string_paradas">Paradas:</string>
     <string name="string_coords">Coordenadas:</string>
     <string name="string_conect_lines">Líneas que conecta:</string>
+    <string name="string_line_separator">-</string>
 
 </resources>

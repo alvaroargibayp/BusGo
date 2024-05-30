@@ -2,33 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:outlineAmbientShadowColor="@android:color/black">
+    android:outlineAmbientShadowColor="@android:color/black"
+    android:background="@drawable/rounder_border"
+    android:layout_marginBottom="15sp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:id="@+id/line_name"
         android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAlignment="center"
         >
     </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/line_origin"
-            android:textSize="20sp"
+            android:textSize="17sp"
+            android:textColor="@color/white"
             >
         </TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/string_line_separator"
+            android:id="@+id/line_separator"
+            android:textColor="#C1BFBF"
+            android:textSize="17sp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/line_destination"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="17sp"
             >
         </TextView>
 

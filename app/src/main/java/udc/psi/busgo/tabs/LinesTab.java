@@ -4,13 +4,15 @@ import static udc.psi.busgo.workers.JSONRequestWorker.JSON_REQUEST_WORKER_OUTPUT
 import static udc.psi.busgo.workers.JSONRequestWorker.JSON_REQUEST_WORKER_URL;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,27 +23,19 @@ import androidx.work.WorkContinuation;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import udc.psi.busgo.LineDetail;
 import udc.psi.busgo.R;
 import udc.psi.busgo.StringUtils;
 import udc.psi.busgo.adapters.LineAdapter;
-import udc.psi.busgo.databinding.FragmentLineDetailBinding;
 import udc.psi.busgo.databinding.FragmentLinesTabBinding;
 import udc.psi.busgo.objects.Line;
 import udc.psi.busgo.workers.JSONRequestWorker;
-import udc.psi.busgo.workers.StringRequestWorker;
 
 
 public class LinesTab extends Fragment {
@@ -66,15 +60,11 @@ public class LinesTab extends Fragment {
 
         binding = FragmentLinesTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
         recyclerView = binding.linesRv;
         swipeRefreshLayout = binding.swipeRefresh;
         workManager = WorkManager.getInstance(getActivity().getApplicationContext());
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        swipeRefreshLayout.setEnabled(false);
         initRecycler();
         searchLines();
         return view;
