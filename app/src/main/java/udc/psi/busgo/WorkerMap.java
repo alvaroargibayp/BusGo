@@ -1,97 +1,55 @@
 package udc.psi.busgo;
 
-import static udc.psi.busgo.StringUtils.compress;
-
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import udc.psi.JsonUtils;
 
 public class WorkerMap extends Worker {
-    public static final String RECIVE_TASK_KEY="recive_massage";
-
-    public interface SearchStopsCallback {
-        void onSearchStops(String parades);
-
-    }
-    String jsonLatLngList;
-
-    String jsonLatLngList2;
-
+    private static final String TAG = "WorkerMap";
 
     public WorkerMap(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
-
-    void searchAllStops(final SearchStopsCallback interfaceName) {
+    private void searchAllStops(CountDownLatch latch) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 "https://bus.delthia.com/api/paradas",
                 null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("_TAG", response.toString());
-                        try {
-                            List<LatLng> stopsCoordsList = new ArrayList<>();
+                response -> {
+                    Log.d(TAG, response.toString());
+                    if (JsonUtils.saveJsonToFile(getApplicationContext(), "paradas.json", response)) {
+                        Log.d(TAG, "File saved successfully");
 
-                            for (int i = 0; i < response.getJSONArray("paradas").length(); i++){
-                                JSONObject currentObject = (JSONObject) response.getJSONArray("paradas").get(i);
-
-                                double coordsLat = currentObject.getJSONArray("coords").getDouble(1);
-                                double coordsLong = currentObject.getJSONArray("coords").getDouble(0);
-
-                                LatLng coords = new LatLng(coordsLat, coordsLong);
-                                Log.d("_TAG2", coords.toString());
-
-                                stopsCoordsList.add(coords);
-                                Log.d("_TAG3", stopsCoordsList.toString());
-                            }
-
-
-                            Gson gson = new Gson();
-                            jsonLatLngList = gson.toJson(stopsCoordsList);
-
-
-                            interfaceName.onSearchStops(jsonLatLngList);
-
-                            Log.d("_TAG2", jsonLatLngList);
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                        String[] fileList = getApplicationContext().fileList();
+                        StringBuilder fileListString = new StringBuilder("Files in internal storage:\n");
+                        for (String fileName : fileList) {
+                            fileListString.append(fileName).append("\n");
                         }
-
+                        Log.d(TAG, fileListString.toString());
+                    } else {
+                        Log.d(TAG, "Error saving file");
                     }
+                    latch.countDown(); // Signal that the request is complete
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Maneja errores aquí
-                    }
+                error -> {
+                    Log.e(TAG, "Error fetching data", error);
+                    latch.countDown(); // Signal that the request is complete
                 }
         );
 
@@ -101,49 +59,31 @@ public class WorkerMap extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Log.d("MyWorker", "Background task executed");
+        Log.d(TAG, "Background task executed");
 
-        CountDownLatch countDownLatch = new CountDownLatch(1);
+        CountDownLatch latch = new CountDownLatch(1);
 
+        searchAllStops(latch);
 
-
-
-        searchAllStops(new SearchStopsCallback() {
-            @Override
-            public void onSearchStops(String parades) {
-                jsonLatLngList2 = parades;
-                countDownLatch.countDown();
+        try {
+            // Espera 30 segundos a que se complete la peticion al servidor
+            boolean completed = latch.await(30, TimeUnit.SECONDS);
+            if (!completed) {
+                Log.d(TAG, "Network request timeout");
+                return Result.failure();
             }
-        });
-
-
-        try {
-            countDownLatch.await();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Latch interrupted", e);
+            return Result.failure();
         }
 
+        String jsonString = JsonUtils.readJsonFromFile2(getApplicationContext(), "paradas.json");
 
-        try {
-            String compressedString = compress(jsonLatLngList2);
-            Data outputData = new Data.Builder()
-                    .putString(RECIVE_TASK_KEY, compressedString)
-                    .build();
-            Log.d("_TAG2", "bbbb: " + compressedString);
-
-
-            return Result.success(outputData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (jsonString != null) {
+            return Result.success();
+        } else {
+            Log.d(TAG, "Failed to read the saved file");
+            return Result.failure();
         }
-
-
-
     }
-
-
-
-
-
-
 }

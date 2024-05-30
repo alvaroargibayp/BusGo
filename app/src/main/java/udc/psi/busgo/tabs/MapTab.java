@@ -3,7 +3,6 @@ package udc.psi.busgo.tabs;
 
 
 import static udc.psi.busgo.StringUtils.decompress;
-import static udc.psi.busgo.WorkerMap.RECIVE_TASK_KEY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +43,18 @@ import com.google.maps.android.clustering.ClusterManager;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import udc.psi.JsonUtils;
 import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
 import udc.psi.busgo.WorkerMap;
@@ -80,6 +89,28 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
         // Add cluster items (markers) to the cluster manager.
         addItemsToCluster();
+    }
+
+    private boolean parseJson(String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            for (int i = 0; i < jsonObject.getJSONArray("paradas").length(); i++){
+                JSONObject currentObject = (JSONObject) jsonObject.getJSONArray("paradas").get(i);
+
+                double coordsLat = currentObject.getJSONArray("coords").getDouble(1);
+                double coordsLong = currentObject.getJSONArray("coords").getDouble(0);
+
+                LatLng coords = new LatLng(coordsLat, coordsLong);
+                Log.d("_TAG2", coords.toString());
+
+                stopsCoordsList.add(coords);
+                Log.d("_TAG3", stopsCoordsList.toString());
+            }
+            return true;
+        } catch (JSONException e) {
+            Log.e("MapTabTag", "Error parsing JSON", e);
+            return false;
+        }
     }
     private void addItemsToCluster() {
 
@@ -211,32 +242,44 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                     }
                 });
 
-
                 workManager1.getWorkInfoByIdLiveData(workRequest.getId())
                         .observe(getViewLifecycleOwner(), new Observer<WorkInfo>() {
                             @Override
                             public void onChanged(WorkInfo workInfo) {
                                 try {
                                     if (workInfo.getState().isFinished()) {
-                                        // Task has finished, display the output data
-                                        String jsonLatLngList = workInfo.getOutputData().getString(RECIVE_TASK_KEY);
-                                        jsonLatLngList = decompress(jsonLatLngList);
+                                        // Cuando se obtenga el json, parsealo en un hilo a parte
+                                        String jsonString = JsonUtils.readJsonFromFile(requireActivity().getApplicationContext(), "paradas.json");
 
-                                        Gson gson = new Gson();
+                                        if (jsonString != null) {
+                                            Log.d("MapTabTag", "Starting HandlerThread to parse JSON");
 
-                                        Type latLngListType = new TypeToken<List<LatLng>>() {}.getType();
-                                        stopsCoordsList = gson.fromJson(jsonLatLngList, latLngListType);
+                                            // Start a new HandlerThread for parsing the JSON
+                                            HandlerThread handlerThread = new HandlerThread("JsonParseThread");
+                                            handlerThread.start();
+                                            Handler handler = new Handler(handlerThread.getLooper());
 
-                                        Log.d("_TAG2", "AAAAAAAAA: " + stopsCoordsList.toString());
+                                            CountDownLatch parseLatch = new CountDownLatch(1);
+
+                                            handler.post(() -> {
+                                                boolean parseSuccess = parseJson(jsonString);
+                                                if (parseSuccess) {
+                                                    Log.d("MapTabTag", "JSON parsed successfully");
+                                                    new Handler(Looper.getMainLooper()).post(() -> setUpClusterer(googleMap));
+                                                } else {
+                                                    Log.d("MapTabTag", "Failed to parse JSON");
+                                                }
+                                                parseLatch.countDown();
+                                            });
+                                        }
 
 
-                                        setUpClusterer(googleMap);
                                     }
                                 } catch (NullPointerException e) {
                                     Log.e("TAG", "onChanged: " + e.getLocalizedMessage());
-                                } catch (IOException e) {
+                                } /*catch (IOException e) {
                                     throw new RuntimeException(e);
-                                }
+                                }*/
                             }
                         });
 
