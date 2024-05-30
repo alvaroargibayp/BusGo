@@ -3,9 +3,11 @@ package udc.psi.busgo.tabs;
 import static udc.psi.busgo.workers.JSONRequestWorker.JSON_REQUEST_WORKER_OUTPUT;
 import static udc.psi.busgo.workers.JSONRequestWorker.JSON_REQUEST_WORKER_URL;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -46,15 +48,10 @@ public class LinesTab extends Fragment {
 
     WorkManager workManager;
 
-    public interface DetailSelection{
-        public void seeDetail(Fragment lineDetail);
+    public interface LineDetailSelection{
+        public void seeLineDetail(Fragment lineDetail);
     }
-    DetailSelection detailSelection;
-
-    public void setDetailSelection(DetailSelection detailSelection){
-        this.detailSelection = detailSelection;
-
-    }
+    LineDetailSelection linedetailSelection;
 
     private static final String TAG = "_TAG Lines Tab";
     FragmentLinesTabBinding binding;
@@ -83,6 +80,17 @@ public class LinesTab extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            linedetailSelection = (LineDetailSelection) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " implement OnMapClickedListener");
+        }
+    }
+
     private void initRecycler() {
         lineAdapter = new LineAdapter();
         LinearLayoutManager linearLayoutManager =
@@ -95,8 +103,9 @@ public class LinesTab extends Fragment {
             public void OnClick(View view, int position, Line line) {
                 Log.d(TAG, "Seleccionada la linea " + line.getName() + " de id " + line.getId());
                 Fragment lineDetail = LineDetail.newInstance(line);
-                if (detailSelection != null){
-                    detailSelection.seeDetail(lineDetail);
+                if (linedetailSelection != null){
+                    Log.d(TAG, "222Seleccionada la linea " + line.getName() + " de id " + line.getId());
+                    linedetailSelection.seeLineDetail(lineDetail);
                 }
             }
         });
