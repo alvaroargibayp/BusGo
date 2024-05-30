@@ -16,6 +16,11 @@ public class Stop implements Parcelable{
     private long osmid;
     private boolean[] properties;
 
+    public Stop(double[] coords, String name) {
+        this.coords = coords;
+        this.name = name;
+    }
+
     public Stop(double[] coords , int id, Line[] lines, String name, double[] osmcoords, long osmid, boolean[] properties) {
         this.coords = coords;
         this.lines = lines;
@@ -98,5 +103,9 @@ public class Stop implements Parcelable{
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -17,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.work.Configuration;
+import androidx.work.WorkManager;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -35,7 +37,7 @@ import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener, StopsTab.StopDetailSelection {
+public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener, StopsTab.StopDetailSelection, LinesTab.LineDetailSelection {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private ActivityMainBinding binding;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         checkLocationPermission();
 
         configureTabs();
+
 
         if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
             showShowcaseStep();
@@ -186,13 +189,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         tabLayout = binding.tabLayout;
         viewPager = binding.viewPager;
 
-        viewPagerAdapter = new ViewPagerAdapter(this, new LinesTab.DetailSelection() {
-            @Override
-            public void seeDetail(Fragment lineDetail) {
-                viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
-                viewPager.setCurrentItem(6, false);
-            }
-        });
+        viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
 
         // Comportamiento de las pestañas
@@ -267,6 +264,12 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     public void seeStopDetail(Fragment stopDetail) {
         viewPagerAdapter.setStopDetail((StopDetail) stopDetail);
         viewPager.setCurrentItem(7, false);
+
+    @Override
+    public void seeLineDetail(Fragment lineDetail) {
+        viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
+        viewPager.setCurrentItem(6,false);
+
     }
 }
 
