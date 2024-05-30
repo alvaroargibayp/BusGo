@@ -37,6 +37,7 @@ public class StopDetail extends Fragment implements View.OnClickListener{
     StopDetailAdapter stopDetailAdapter;
     RecyclerView recyclerView;
     TextView detailTittle;
+    TextView coordsTv;
 
     private Stop stop;
 
@@ -74,9 +75,11 @@ public class StopDetail extends Fragment implements View.OnClickListener{
         recyclerView = binding.stopLinesRv;
         initRecycler();
         detailTittle = binding.tvStopDetailTittle;
-
-        detailTittle.setText("Parada " + stop.getName());
-
+        String titlePlaceHolder = detailTittle.getText().toString();
+        detailTittle.setText(titlePlaceHolder + " " + stop.getName());
+        coordsTv = binding.tvStopDetailCoords;
+        String coordsPlaceHolder = coordsTv.getText().toString();
+        coordsTv.setText(coordsPlaceHolder + " " + stop.getCoords()[0] + " " + stop.getCoords()[1]);
     }
 
     void searchSpecificStop(int stopId){
@@ -90,13 +93,14 @@ public class StopDetail extends Fragment implements View.OnClickListener{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.d(TAG, response);
+                        Log.d(TAG, String.valueOf(response));
                         try {
                             ArrayList<Line> stopLines = new ArrayList<>();
                             for (int i = 0; i < response.getJSONArray("lineas").length(); i++){
                                 JSONObject currentLine = (JSONObject) response.getJSONArray("lineas").get(i);
                                 stopLines.add(new Line(
                                     currentLine.get("color").toString(), currentLine.get("nombre").toString(), Integer.parseInt(currentLine.get("id").toString())));
+                                stopDetailAdapter.addLine(currentLine.get("nombre").toString(), Integer.parseInt(currentLine.get("id").toString()));
                              }
                             JSONArray coordsArray = response.getJSONArray("coords");
                             double[] coords = new double[2];

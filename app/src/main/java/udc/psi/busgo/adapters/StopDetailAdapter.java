@@ -1,22 +1,15 @@
 package udc.psi.busgo.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import udc.psi.busgo.LineDetail;
-import udc.psi.busgo.databinding.FragmentLineDetailBinding;
-import udc.psi.busgo.databinding.LineDetailLayoutPlaceholderBinding;
-import udc.psi.busgo.databinding.LineLayoutBinding;
 import udc.psi.busgo.databinding.StopDetailLayoutPlaceholderBinding;
-import udc.psi.busgo.objects.Line;
 
 public class StopDetailAdapter extends RecyclerView.Adapter<StopDetailAdapter.StopDetailViewHolder> {
 
@@ -64,4 +57,8 @@ public class StopDetailAdapter extends RecyclerView.Adapter<StopDetailAdapter.St
         }
     }
 
+    public void addLine(String name, int id){
+        lineList.add(name);
+        notifyItemInserted(getItemCount());
+    }
 }
