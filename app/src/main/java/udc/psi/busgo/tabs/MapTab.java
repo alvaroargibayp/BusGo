@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -60,6 +65,7 @@ import udc.psi.busgo.R;
 import udc.psi.busgo.WorkerMap;
 import udc.psi.busgo.objects.BusStopClusterItem;
 import udc.psi.busgo.objects.BusStopClusterRenderer;
+import udc.psi.busgo.objects.MarkerConDistancia;
 
 public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener, GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -67,12 +73,62 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     Marker originMarker = null;
     Marker destinationMarker = null;
     Button searchButton;
-    List<LatLng> stopsCoordsList = new ArrayList<>();
+    List<Pair<Integer, LatLng>> stopsCoordsList = new ArrayList<>();
     WorkManager workManager;
     volatile boolean workerEnded = false;
 
+    List<Pair<Integer, Pair<Integer, MarkerConDistancia>>> marcadoresCercanosOrigen = new ArrayList<>();
+    List<Pair<Integer, Pair<Integer, MarkerConDistancia>>> marcadoresCercanosDestino = new ArrayList<>();
+
+    List<Pair<Integer, MarkerOptions>> currentMapMarkers = new ArrayList<>();
+    List<Pair<Integer, String>> listaLineasOrigen = new ArrayList<>();
+    List<Pair<Integer, String>> listaLineasDestino = new ArrayList<>();
+
+    List<Pair<Integer, List<Pair<Integer, String>>>> listaDeListasDeParadasOrigen = new ArrayList<>();
+    List<Pair<Integer, List<Pair<Integer, String>>>> listaDeListasDeParadasDestino = new ArrayList<>();
+
+    // Cada indice es una parada (Pair)
+    // Cada parada (Pair) contiene (IDParada, Lista de lineas (Pair))
+    // Cada lista de lineas (Pair) contiene (IDLinea, NombreLinea)
+
     // Declare a variable for the cluster manager.
     private ClusterManager<BusStopClusterItem> clusterManager;
+
+    private void calcularRutas() {
+        // Por cada parada en el origen...
+        // Por cada linea en la parada de origen...
+        // Si esa linea esta en alguna parada del destino...
+        // Marcar linea como valida
+        // Obtener el id de la parada de origen y destino
+
+        List<Pair<Integer, Pair<Integer, Integer>>> rutasList = new ArrayList<>();
+
+        Log.d("TAG_RUTAS", "ORIGEN: " + listaDeListasDeParadasOrigen.toString());
+        Log.d("TAG_RUTAS", "DESTINO: " + listaDeListasDeParadasDestino.toString());
+
+
+        for (Pair<Integer, List<Pair<Integer, String>>> paradaOrigen : listaDeListasDeParadasOrigen ) { // Por cada parada en origen...
+            for (Pair<Integer, String> lineaOrigen : paradaOrigen.second) { // Por cada linea en la parada de origen...
+                for (Pair<Integer, List<Pair<Integer, String>>> paradaDestino : listaDeListasDeParadasDestino) {
+                    for (Pair<Integer, String> lineaDestino : paradaDestino.second) {
+                        if (!paradaDestino.first.equals(paradaOrigen.first)) { // Si la parada de destino no es la misma que la de origen...
+                            if (lineaOrigen.first.equals(lineaDestino.first)) { // Si esa linea esta en alguna parada de destino...
+                                Pair<Integer, Integer> paradasOrigenDestino = new Pair<>(paradaOrigen.first, paradaDestino.first);
+                                Pair<Integer, Pair<Integer, Integer>> ruta = new Pair<>(lineaOrigen.first, paradasOrigenDestino);
+                                Log.d("TAG_RUTAS", "Ruta añadida: " + ruta);
+
+                                rutasList.add(ruta); // Se añade la ruta a la lista (IdLinea, (IdParadaOrigen, IdParadaDestino))
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        Log.d("TAG_RUTAS", rutasList.toString());
+    }
 
     private void setUpClusterer(GoogleMap googleMap) {
         // Position the map.
@@ -100,10 +156,18 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                 double coordsLat = currentObject.getJSONArray("coords").getDouble(1);
                 double coordsLong = currentObject.getJSONArray("coords").getDouble(0);
 
+                int stopId = currentObject.getInt("id");
+
+                JSONArray jsonArray = currentObject.getJSONArray("lineas");
+
+
                 LatLng coords = new LatLng(coordsLat, coordsLong);
                 Log.d("_TAG2", coords.toString());
 
-                stopsCoordsList.add(coords);
+
+                Pair<Integer, LatLng> pair = new Pair<Integer, LatLng>(stopId, coords);
+                stopsCoordsList.add(pair);
+
                 Log.d("_TAG3", stopsCoordsList.toString());
             }
             return true;
@@ -112,23 +176,46 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
             return false;
         }
     }
+
+    private List<Pair<Integer, String>> parseStopJson(String jsonString, int stopJsonPosition) {
+        List<Pair<Integer, String>> listaLineas = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            int jsonArrayLength = jsonObject.getJSONArray("paradas").getJSONObject(stopJsonPosition).getJSONArray("lineas").length();
+
+            for (int i = 0; i < jsonArrayLength; i++) {
+                JSONObject currentObject = (JSONObject) jsonObject.getJSONArray("paradas").getJSONObject(stopJsonPosition).getJSONArray("lineas").get(i);
+
+                int lineId = currentObject.getInt("id");
+                String lineName = currentObject.getString("nombre");
+
+                Pair<Integer, String> pair = new Pair<>(lineId, lineName);
+
+                listaLineas.add(pair);
+
+            }
+
+        } catch (JSONException e) {
+            Log.e("MapTabTag", "Error parsing JSON", e);
+        }
+
+        return listaLineas;
+    }
     private void addItemsToCluster() {
-
-        // Set some lat/lng coordinates to start with.
-        /*double lat = 43.33920463853277;
-        double lng = -8.437498363975866;
-        // Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            BusStopClusterItem offsetItem = new BusStopClusterItem(lat, lng, "Title " + i, "Snippet " + i);
+        int pos = 1;
+        for (Pair<Integer, LatLng> coords : stopsCoordsList) {
+            BusStopClusterItem offsetItem = new BusStopClusterItem(coords.second.latitude, coords.second.longitude, "Title " + coords.second.latitude, "Snippet " + coords.second.longitude);
             clusterManager.addItem(offsetItem);
-        }*/
 
-        for (LatLng coords : stopsCoordsList) {
-            BusStopClusterItem offsetItem = new BusStopClusterItem(coords.latitude, coords.longitude, "Title " + coords.latitude, "Snippet " + coords.longitude);
-            clusterManager.addItem(offsetItem);
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(offsetItem.getPosition())
+                    .title(offsetItem.getTitle())
+                    .snippet(offsetItem.getSnippet());
+
+            currentMapMarkers.add(new Pair<Integer, MarkerOptions>(coords.first, markerOptions));
+            pos = pos + 1;
         }
     }
 
@@ -143,6 +230,8 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
             originMarker = googleMap.addMarker(markerOptions);
+
+            obtenerMarcadoresCercanosOrigen(originMarker.getPosition());
         }
         if (which == 1) {
             if (destinationMarker != null)
@@ -150,14 +239,20 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             destinationMarker = googleMap.addMarker(markerOptions);
+
+            obtenerMarcadoresCercanosDestino(originMarker.getPosition());
+
         }
     }
 
     @Override
     public void onClick(View v) {
         if (v == searchButton) {
+            calcularRutas();
         }
     }
+
+
 
     public interface OnMapClickedListener {
         public void onMapClicked(GoogleMap googleMap, LatLng latLng);
@@ -206,6 +301,88 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
         // Required empty public constructor
     }
 
+    public double calcularDistancia(LatLng punto1, LatLng punto2) {
+        double lat1 = punto1.latitude;
+        double lon1 = punto1.longitude;
+        double lat2 = punto2.latitude;
+        double lon2 = punto2.longitude;
+        double R = 6371; // Radio de la Tierra en kilómetros
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Distancia en kilómetros
+    }
+    public void obtenerMarcadoresCercanosOrigen(LatLng punto) {
+        // Calcula la distancia de cada marcador al punto presionado
+        int id = 0;
+        for (Pair<Integer, MarkerOptions> marker : currentMapMarkers) {
+            double distancia = calcularDistancia(punto, marker.second.getPosition());
+            //marker.setTag(distancia); // Guarda la distancia como un tag en el marcador
+            Pair<Integer, Pair<Integer, MarkerConDistancia>> pair = new Pair<>(id, new Pair<>(marker.first, new MarkerConDistancia(marker.second, distancia)));
+            marcadoresCercanosOrigen.add(pair);
+            id = id + 1;
+        }
+
+        // Ordena los marcadores por distancia
+        marcadoresCercanosOrigen.sort(Comparator.comparingDouble(m -> m.second.second.distancia));
+
+        // Procesa los marcadores cercanos
+        for (int i = 0; i < Math.min(5, marcadoresCercanosOrigen.size()); i++) {
+            Pair<Integer, Pair<Integer, MarkerConDistancia>> markerCercano = marcadoresCercanosOrigen.get(i);
+            Log.d("Marcador Cercano", "Marker: " + markerCercano.second.second.marker.getTitle() + ", Distancia: " + markerCercano.second.second.distancia);
+
+            String jsonString = JsonUtils.readJsonFromFile(requireActivity().getApplicationContext(), "paradas.json");
+            listaLineasOrigen = parseStopJson(jsonString, markerCercano.first);
+
+            Pair<Integer, List<Pair<Integer, String>>> pair = new Pair<>(markerCercano.second.first, listaLineasOrigen);
+
+            listaDeListasDeParadasOrigen.add(pair);
+
+        }
+
+        Log.d("Marcador Cercano", "LISTA LINEAS ORIGEN:" + listaDeListasDeParadasOrigen.toString());
+
+    }
+
+    public void obtenerMarcadoresCercanosDestino(LatLng punto) {
+        // Calcula la distancia de cada marcador al punto presionado
+        int id = 0;
+        for (Pair<Integer, MarkerOptions> marker : currentMapMarkers) {
+            double distancia = calcularDistancia(punto, marker.second.getPosition());
+            //marker.setTag(distancia); // Guarda la distancia como un tag en el marcador
+            Pair<Integer, Pair<Integer, MarkerConDistancia>> pair = new Pair<>(id, new Pair<>(marker.first, new MarkerConDistancia(marker.second, distancia)));
+
+            marcadoresCercanosDestino.add(pair);
+            id = id + 1;
+
+        }
+
+        // Ordena los marcadores por distancia
+        marcadoresCercanosDestino.sort(Comparator.comparingDouble(m -> m.second.second.distancia));
+
+        // Procesa los marcadores cercanos
+        for (int i = 0; i < Math.min(5, marcadoresCercanosDestino.size()); i++) {
+            Pair<Integer, Pair<Integer, MarkerConDistancia>> markerCercano = marcadoresCercanosDestino.get(i);
+            Log.d("Marcador Cercano", "Marker: " + markerCercano.second.second.marker.getTitle() + ", Distancia: " + markerCercano.second.second.distancia);
+
+            String jsonString = JsonUtils.readJsonFromFile(requireActivity().getApplicationContext(), "paradas.json");
+            listaLineasDestino = parseStopJson(jsonString, markerCercano.first);
+
+            // MarkerCercano
+                // First => ParadaId
+                // Second => MarkerConDistancia
+            Pair<Integer, List<Pair<Integer, String>>> pair = new Pair<>(markerCercano.second.first, listaLineasDestino);
+
+            listaDeListasDeParadasDestino.add(pair);
+
+        }
+
+        Log.d("Marcador Cercano", "LISTA LINEAS DESTINO:" + listaDeListasDeParadasDestino.toString());
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,8 +395,11 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
         // Initialize view
         Log.d("_TAG", "TGAAGADGDAFA: " + getTag());
 
+
         View view=inflater.inflate(R.layout.fragment_map, container, false);
 
+        searchButton = view.findViewById(R.id.calculateRoutes);
+        searchButton.setOnClickListener(this);
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(WorkerMap.class).build();
 
         WorkManager workManager1 = WorkManager.getInstance(requireActivity().getApplicationContext());
@@ -272,17 +452,12 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                                                 parseLatch.countDown();
                                             });
                                         }
-
-
                                     }
                                 } catch (NullPointerException e) {
                                     Log.e("TAG", "onChanged: " + e.getLocalizedMessage());
-                                } /*catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }*/
+                                }
                             }
                         });
-
                 googleMap.setOnMyLocationButtonClickListener(MapTab.this);
                 googleMap.setOnMyLocationClickListener(MapTab.this);
                 enableMyLocation(googleMap); // Si el usuario da permisos de localización, dibujar el boton de ir a ubicacion

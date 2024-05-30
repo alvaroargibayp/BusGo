@@ -78,7 +78,7 @@ public class LineDetail extends Fragment implements View.OnClickListener {
 
     }
 
-    void searchSpecificLine(int lineId){
+    void searchSpecificLine(int lineId) {
         Log.d(TAG, "Search line " + lineId);
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 

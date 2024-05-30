@@ -17,7 +17,12 @@
         android:tag="mapFragmentTag"
         class="com.google.android.gms.maps.SupportMapFragment"/>
 
-
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calcular_rutas"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/calculateRoutes">
+    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

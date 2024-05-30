@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
                 .build();
 
         userGuide.forceTextPosition(ShowcaseView.BELOW_SHOWCASE);
-
-
         userGuide.setOnShowcaseEventListener(new OnShowcaseEventListener() {
             @Override
             public void onShowcaseViewHide(ShowcaseView showcaseView) {
