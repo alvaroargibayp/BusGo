@@ -21,7 +21,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     LineDetail lineDetail;
     StopDetail stopDetail;
-    LinesTab.DetailSelection detailSelection;
+    LinesTab.LineDetailSelection detailSelection;
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
