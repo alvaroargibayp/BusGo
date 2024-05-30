@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -52,6 +53,7 @@ public class StopsTab extends Fragment {
 
     StopAdapter stopAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -63,6 +65,8 @@ public class StopsTab extends Fragment {
         View view = binding.getRoot();
         view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
         recyclerView = binding.stopsRv;
+        swipeRefreshLayout = binding.swipeRefresh;
+        swipeRefreshLayout.setEnabled(false);
         initRecycler();
         searchAllStops();
 

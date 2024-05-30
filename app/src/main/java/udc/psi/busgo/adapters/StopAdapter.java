@@ -59,12 +59,12 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
 
     public static class StopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView name, coords;
+        public TextView id, name;
         private Stop stop;
         public StopViewHolder(@NonNull StopLayoutBinding binding) {
             super(binding.getRoot());
+            id = binding.stopId;
             name = binding.stopName;
-            coords = binding.stopCoords;
             binding.getRoot().setOnClickListener(this);
         }
 
@@ -72,10 +72,8 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
             Log.d(TAG, "Bind stop:\n Name: " + stop.getName() + "\n Id: " + stop.getId()
                     + "\n Coordenadas: " + stop.getCoords()[0] + " - " + stop.getCoords()[1]
                     + "\n osmId: " + stop.getOsmid());
+            id.setText("" + stop.getId());
             name.setText(stop.getName());
-            double[] coordsArray = stop.getCoords();
-
-            coords.setText(coordsArray[0] + " " + coordsArray[1]);
             this.stop = stop;
         }
         @Override
