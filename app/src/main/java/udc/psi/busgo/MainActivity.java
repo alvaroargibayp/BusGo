@@ -261,12 +261,12 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     @Override
     public void seeStopDetail(Fragment stopDetail) {
         viewPagerAdapter.setStopDetail((StopDetail) stopDetail);
-        viewPager.setCurrentItem(7, false);
+        viewPager.setCurrentItem(6, false);
     }
     @Override
     public void seeLineDetail(Fragment lineDetail) {
         viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
-        viewPager.setCurrentItem(6,false);
+        viewPager.setCurrentItem(5,false);
 
     }
 }
