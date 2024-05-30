@@ -20,11 +20,9 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     private static final String TAG = "_TAG View Pager Adapter";
 
     LineDetail lineDetail;
-    LinesTab.DetailSelection detailSelection;
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, LinesTab.DetailSelection detailSelection) {
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.detailSelection = detailSelection;
         lineDetail = new LineDetail();
     }
 
@@ -39,9 +37,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 2:
                 return new HomeTab();
             case 3:
-                LinesTab linesTab = new LinesTab();
-                linesTab.setDetailSelection(detailSelection);
-                return linesTab;
+                return new LinesTab();
             case 4:
                 return new SettingsTab();
             case 5:
