@@ -1,9 +1,13 @@
 package udc.psi.busgo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.google.android.gms.maps.MapFragment;
 
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
@@ -17,11 +21,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     LineDetail lineDetail;
     StopDetail stopDetail;
-    LinesTab.LineDetailSelection detailSelection;
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
         lineDetail = new LineDetail();
+        stopDetail = new StopDetail();
     }
 
     @NonNull
@@ -29,21 +33,26 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
+                Log.d(TAG, "Creacion de tab 0");
                 return new MapTab();
             case 1:
+                Log.d(TAG, "Creacion de tab 1");
                 return new StopsTab();
             case 2:
-                return new HomeTab();
-            case 3:
+                Log.d(TAG, "Creacion de tab 2");
                 return new LinesTab();
-            case 4:
+            case 3:
+                Log.d(TAG, "Creacion de tab 3");
                 return new SettingsTab();
-            case 5:
+            case 4:
+                Log.d(TAG, "Creacion de tab 4");
                 return lineDetail;
-            case 6:
+            case 5:
+                Log.d(TAG, "Creacion de tab 5");
                 return stopDetail;
             default:
-                return new HomeTab();
+                Log.d(TAG, "Creacion de tab default");
+                return new MapTab();
         }
     }
 
@@ -59,7 +68,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     }
     @Override
     public int getItemCount() {
-        return 7;
+        return 6;
     }
 
 }

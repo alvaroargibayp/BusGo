@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.LocaleList;
@@ -60,6 +61,7 @@ public class SettingsTab extends Fragment implements RadioGroup.OnCheckedChangeL
                              Bundle savedInstanceState) {
         fragmentSettingsTabBinding = FragmentSettingsTabBinding.inflate(inflater, container, false);
         View view = fragmentSettingsTabBinding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
 
         themeRadioGroup = fragmentSettingsTabBinding.radioGroupThemeId;
         themeRadioGroup.setOnCheckedChangeListener(this);

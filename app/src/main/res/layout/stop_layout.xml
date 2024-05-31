@@ -3,27 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:outlineAmbientShadowColor="@android:color/black">
+    android:outlineAmbientShadowColor="@android:color/black"
+    android:background="@drawable/rounder_border"
+    android:layout_marginBottom="15sp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/stop_id"
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        >
+    </TextView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stop_name"
-        android:textSize="15sp"
+        android:textSize="17sp"
+        android:textColor="@color/white"
         >
     </TextView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/stop_coords"
-            android:textSize="10sp"
-            >
-        </TextView>
-    </LinearLayout>
 
 </LinearLayout>

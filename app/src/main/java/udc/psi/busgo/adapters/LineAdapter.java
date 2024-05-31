@@ -58,12 +58,13 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
 
     public static class LineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView name, origin, destination;
+        public TextView name, origin, separator, destination;
         private Line line;
         public LineViewHolder(@NonNull LineLayoutBinding binding) {
             super(binding.getRoot());
             name = binding.lineName;
             origin = binding.lineOrigin;
+            separator = binding.lineSeparator;
             destination = binding.lineDestination;
             binding.getRoot().setOnClickListener(this);
         }
@@ -73,6 +74,7 @@ public class LineAdapter extends RecyclerView.Adapter<LineAdapter.LineViewHolder
             //        + "\n Destination: " + line.getDestination());
             name.setText(line.getName());
             origin.setText(line.getOrigin());
+            separator.setText(" " + separator.getText().toString() + " ");
             destination.setText(line.getDestination());
             this.line = line;
         }

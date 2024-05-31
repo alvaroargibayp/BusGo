@@ -9,8 +9,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_lineas"
-        android:id="@+id/tv_line_detail_tittle" />
+        android:id="@+id/tv_line_detail_tittle"
+        android:gravity="center"
+        android:layout_marginTop="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp" />
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

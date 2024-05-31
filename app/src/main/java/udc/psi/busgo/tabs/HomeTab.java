@@ -2,6 +2,7 @@ package udc.psi.busgo.tabs;
 
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -32,6 +33,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentHomeTabBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
         binding.btnSearch.setOnClickListener(this);
         return view;
     }

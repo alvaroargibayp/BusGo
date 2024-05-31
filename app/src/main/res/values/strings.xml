@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">BusGo</string>
-    <string name="string_lineas">Lineas:</string>
+    <string name="string_lineas">Linea:</string>
     <string name="home" translatable="false">Home</string>
     <string name="home_title">Busqueda individual</string>
     <string name="lines">Líneas</string>
@@ -64,6 +64,7 @@
     <string name="string_paradas">Paradas:</string>
     <string name="string_coords">Coordenadas:</string>
     <string name="string_conect_lines">Líneas que conecta:</string>
+    <string name="string_line_separator">-</string>
     <string name="calcular_rutas">Calcular rutas</string>
     <string name="showPreviousLineButton"><![CDATA[<]]></string>
     <string name="lineName" />

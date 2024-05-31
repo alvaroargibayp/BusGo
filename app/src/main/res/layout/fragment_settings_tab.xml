@@ -21,12 +21,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/settings_layout_bg"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="15sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_languageTittle" />
+                    android:text="@string/settings_languageTittle"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -43,19 +49,22 @@
                             android:id="@+id/settings_toggle_language_spanish"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_option_language_spanish" />
+                            android:text="@string/settings_option_language_spanish"
+                            android:textColor="@color/white" />
 
                         <RadioButton
                             android:id="@+id/settings_toggle_language_english"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_option_language_english" />
+                            android:text="@string/settings_option_language_english"
+                            android:textColor="@color/white" />
 
                         <RadioButton
                             android:id="@+id/settings_toggle_language_galician"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_option_language_galician" />
+                            android:text="@string/settings_option_language_galician"
+                            android:textColor="@color/white" />
 
                     </RadioGroup>
 
@@ -69,12 +78,15 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/settings_layout_bg"
-
-                >
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_themeTittle" />
+                    android:text="@string/settings_themeTittle"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -91,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_theme_whiteTheme"
                             android:text="@string/settings_option_theme_whiteTheme"
-
+                            android:textColor="@color/white"
                             />
 
                         <RadioButton
@@ -99,6 +111,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_theme_blackTheme"
                             android:text="@string/settings_option_theme_blackTheme"
+                            android:textColor="@color/white"
                             />
 
                         <RadioButton
@@ -108,7 +121,7 @@
 
                             android:id="@+id/settings_toggle_theme_systemTheme"
                             android:text="@string/settings_option_theme_systemTheme"
-
+                            android:textColor="@color/white"
                             />
 
                     </RadioGroup>
@@ -124,12 +137,17 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/settings_layout_bg"
-
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_initialScreenTittle" />
+                    android:text="@string/settings_initialScreenTittle"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,26 +160,29 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_initialScreen_map"
                             android:text="@string/settings_option_initialScreen_map"
+                            android:textColor="@color/white"
                             />
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_initialScreen_stops"
                             android:text="@string/settings_option_initialScreen_stops"
+                            android:textColor="@color/white"
                             />
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_initialScreen_lines"
                             android:text="@string/settings_option_initialScreen_lines"
+                            android:textColor="@color/white"
                             />
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/settings_toggle_initialScreen_home"
                             android:checked="true"
-
                             android:text="@string/settings_option_initialScreen_home"
+                            android:textColor="@color/white"
                             />
 
                     </RadioGroup>
@@ -176,12 +197,17 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/settings_layout_bg"
-
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_launcherOptionsTittle" />
+                    android:text="@string/settings_launcherOptionsTittle"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -191,31 +217,32 @@
                         android:layout_height="match_parent"
                         android:id="@+id/settings_toggle_launcherOptions_showFavoriteStops"
                         android:checked="true"
-
                         android:text="@string/settings_option_launcherOptions_showFavoriteStops"
+                        android:textColor="@color/white"
                         />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="numberDecimal"
-                        android:hint="@string/settings_option_launcherOptions_numberOfFavoriteStops"/>
+                        android:hint="@string/settings_option_launcherOptions_numberOfFavoriteStops"
+                        android:textColor="@color/white" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/settings_toggle_launcherOptions_showCloseStops"
                         android:checked="true"
-
                         android:text="@string/settings_option_launcherOptions_showCloseStops"
-
+                        android:textColor="@color/white"
                         />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="numberDecimal"
-                        android:hint="@string/settings_option_launcherOptions_numberOfCloseStops"/>
+                        android:hint="@string/settings_option_launcherOptions_numberOfCloseStops"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>
@@ -226,11 +253,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/settings_layout_bg">
+                android:background="@drawable/settings_layout_bg"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_showUserGuide" />
+                    android:text="@string/settings_showUserGuide"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

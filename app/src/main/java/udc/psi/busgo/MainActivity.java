@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d(TAG, "Seleccionada la pestaña " + tab.getPosition() + "\n Pestaña actual " + viewPager.getCurrentItem());
-                if (viewPager.getCurrentItem() >= 5){
+                if (viewPager.getCurrentItem() >= 4){
                     viewPager.setCurrentItem(tab.getPosition(), false);
                 } else{
                 viewPager.setCurrentItem(tab.getPosition(), true);
@@ -226,9 +226,6 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
 //            }
 //       });
 
-        // Ajustar el tab y el pager para que la primera pantalla sea el home
-        tabLayout.getTabAt(2).select();
-        viewPager.setCurrentItem(2, false);
     }
 
     @Override
@@ -261,12 +258,12 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
     @Override
     public void seeStopDetail(Fragment stopDetail) {
         viewPagerAdapter.setStopDetail((StopDetail) stopDetail);
-        viewPager.setCurrentItem(6, false);
+        viewPager.setCurrentItem(5, false);
     }
     @Override
     public void seeLineDetail(Fragment lineDetail) {
         viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
-        viewPager.setCurrentItem(5,false);
+        viewPager.setCurrentItem(4,false);
 
     }
 }
