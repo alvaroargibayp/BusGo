@@ -9,20 +9,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/string_stops"
-        android:id="@+id/tv_stop_detail_tittle" />
+        android:id="@+id/tv_stop_detail_tittle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/string_coords"
-        android:id="@+id/tv_stop_detail_coords"/>
+        android:id="@+id/tv_stop_detail_coords"
+        android:layout_marginTop="20sp"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/string_conect_lines"
-        android:id="@+id/tv_stop_detail_conect_lines"/>
+        android:id="@+id/tv_stop_detail_conect_lines"
+        android:layout_gravity="center"
+        android:layout_marginTop="15sp"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"

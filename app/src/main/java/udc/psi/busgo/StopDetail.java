@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +38,7 @@ public class StopDetail extends Fragment implements View.OnClickListener{
     FragmentStopDetailBinding binding;
     StopDetailAdapter stopDetailAdapter;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefresh;
     TextView detailTittle;
     TextView coordsTv;
 
@@ -67,6 +70,9 @@ public class StopDetail extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         binding = FragmentStopDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
+        swipeRefresh = binding.swipeRefresh;
+        swipeRefresh.setEnabled(false);
         setLayout();
         searchSpecificStop(stop.getId());
         return view;
@@ -75,8 +81,7 @@ public class StopDetail extends Fragment implements View.OnClickListener{
         recyclerView = binding.stopLinesRv;
         initRecycler();
         detailTittle = binding.tvStopDetailTittle;
-        String titlePlaceHolder = detailTittle.getText().toString();
-        detailTittle.setText(titlePlaceHolder + " " + stop.getName());
+        detailTittle.setText(stop.getName());
         coordsTv = binding.tvStopDetailCoords;
         String coordsPlaceHolder = coordsTv.getText().toString();
         coordsTv.setText(coordsPlaceHolder + " " + stop.getCoords()[0] + " " + stop.getCoords()[1]);

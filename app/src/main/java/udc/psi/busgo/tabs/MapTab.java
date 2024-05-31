@@ -68,6 +68,7 @@ import udc.psi.JsonUtils;
 import udc.psi.busgo.MainActivity;
 import udc.psi.busgo.R;
 import udc.psi.busgo.WorkerMap;
+import udc.psi.busgo.databinding.FragmentMapTabBinding;
 import udc.psi.busgo.objects.BusStopClusterItem;
 import udc.psi.busgo.objects.BusStopClusterRenderer;
 import udc.psi.busgo.objects.MarkerConDistancia;
@@ -75,6 +76,7 @@ import udc.psi.busgo.objects.MarkerConDistancia;
 public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener, View.OnClickListener, GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TASK_KEY = "Input_TASK_KEY";
+    FragmentMapTabBinding binding;
     Marker originMarker = null;
     Marker destinationMarker = null;
     Button searchButton;
@@ -173,26 +175,6 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
         // Add cluster items (markers) to the cluster manager.
         addItemsToCluster();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentMapTabBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
-      
-        stop1Button = binding.buttonParada1;
-        stop1Button.setOnClickListener(this);
-
-        stop2Button = binding.buttonParada2;
-        stop2Button.setOnClickListener(this);
-
-        stop3Button = binding.buttonParada3;
-        stop3Button.setOnClickListener(this);
-
-
-        return view;
     }
       
   
@@ -465,6 +447,7 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
 
         View view=inflater.inflate(R.layout.fragment_map, container, false);
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
 
         searchButton = view.findViewById(R.id.calculateRoutes);
         searchButton.setOnClickListener(this);

@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.gms.maps.MapFragment;
+
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
 import udc.psi.busgo.tabs.MapTab;
@@ -41,7 +43,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 5:
                 return stopDetail;
             default:
-                return new MapFragment();
+                return new MapTab();
         }
     }
 

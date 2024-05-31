@@ -6,7 +6,7 @@
     <string name="stops">Stops</string>
     <string name="map">Map</string>
     <string name="settings">Settings</string>
-    <string name="string_stops">Stops:</string>
+    <string name="string_stops">Stop:</string>
     <string name="settings_themeTittle">Theme</string>
     <string name="settings_languageTittle">Language</string>
     <string name="settings_initialScreenTittle">Home screen</string>
