@@ -103,7 +103,8 @@ public class LineDetail extends Fragment{
             }
         });
         if (line != null){
-            detailTittle.setText("Linea " + line.getName());
+            String titlePH = detailTittle.getText().toString();
+            detailTittle.setText(line.getName() + "  " + line.getOrigin() + " - " + line.getDestination());
         }
     }
 

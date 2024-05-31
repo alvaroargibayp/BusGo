@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="string_lineas">Lineas:</string>
+    <string name="string_lineas">Liña:</string>
     <string name="home_title">Busqueda unica</string>
     <string name="lines">Lineas</string>
     <string name="stops">Paradas</string>

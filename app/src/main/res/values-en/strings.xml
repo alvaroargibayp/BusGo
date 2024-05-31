@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="string_lineas">Lines:</string>
+    <string name="string_lineas">Line:</string>
     <string name="home_title">Unique search</string>
     <string name="lines">Lines</string>
     <string name="stops">Stops</string>
