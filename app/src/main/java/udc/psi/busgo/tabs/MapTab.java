@@ -260,6 +260,9 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
             obtenerMarcadoresCercanosDestino(originMarker.getPosition());
 
         }
+        if (destinationMarker != null && originMarker != null) {
+            searchButton.setEnabled(true);
+        }
     }
 
     @Override
