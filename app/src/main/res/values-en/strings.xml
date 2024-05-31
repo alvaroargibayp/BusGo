@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">BusGo</string>
     <string name="string_lineas">Line:</string>
-    <string name="home_title">Unique search</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="home_title">Individual search</string>
     <string name="lines">Lines</string>
     <string name="stops">Stops</string>
     <string name="map">Map</string>
@@ -12,7 +13,7 @@
     <string name="settings_initialScreenTittle">Home screen</string>
     <string name="settings_launcherOptionsTittle">Launcher settings</string>
     <string name="settings_option_initialScreen_home">Home (Default)</string>
-    <string name="settings_option_initialScreen_map">Map</string>
+    <string name="settings_option_initialScreen_map">Map (Default)</string>
     <string name="settings_option_initialScreen_stops">Stops</string>
     <string name="settings_option_initialScreen_lines">Lines</string>
     <string name="settings_option_language_spanish">Spanish</string>
@@ -21,24 +22,51 @@
     <string name="settings_option_theme_blackTheme">Dark</string>
     <string name="settings_option_theme_whiteTheme">White</string>
     <string name="settings_option_theme_systemTheme">System</string>
-    <string name="settings_option_launcherOptions_showFavoriteStops">Show favorite stops</string>
+    <string name="settings_option_launcherOptions_showFavoriteStops">Show favourite stops</string>
     <string name="settings_option_launcherOptions_showCloseStops">Show close stops</string>
     <string name="settings_option_launcherOptions_numberOfCloseStops">Number of close stops</string>
-    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Number of favorite stops</string>
-    <string name="et_buscar">Give an id</string>
+    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Number of favourite stops</string>
+    <string name="et_buscar">Input an Id</string>
     <string name="bt_search_string">Search</string>
-    <string name="settings_showUserGuide">Show user guide (Restart is needed)</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="stopsWidgetUndefinedStopsText">Syncronize widget with a stop</string>
+    <string name="stopsWidgetUndefinedStopsButtonText">+</string>
+    <string name="stopsWidgetStopName">Campus Elviña</string>
+    <string name="stopsWidgetStopNameAccDesc">Stop name</string>
+    <string name="stopsWidgetLineNumber">24A</string>
+    <string name="stopsWidgetLineNumberAccesDesc">Line number of next bus</string>
+    <string name="stopsWidgetTimeRemainingAccesDesc">Time left for the next bus</string>
+    <string name="stopsWidgetTimeRemaining">5 minutes</string>
+    <string name="stopsWidgetUpdateButton">X</string>
+    <string name="stopsWidgetUpdateButtonAccesDesc">Button to update widget information</string>
+    <string name="settings_showUserGuide">Show user guide\n(Restart is needed)</string>
     <string name="settings_showUserGuideButtonText">Show</string>
     <string name="userGuideMapTabTitle">Map</string>
-    <string name="userGuideMapTabText">Visually search for bus routes with the help of a map.</string>
+    <string name="userGuideMapTabText">Search rutes visually with a map.</string>
     <string name="userGuideStopsTabTitle">Stops</string>
+    <string name="userGuideHomeTabTitle" translatable="false">Home</string>
     <string name="userGuideLinesTabTitle">Lines</string>
     <string name="userGuideSettingsTabTitle">Settings</string>
-    <string name="userGuideStopsTabText">Visualize the stops.</string>
-    <string name="userGuideHomeTabText">Visualize close stops and favorite stops.</string>
-    <string name="userGuideLinesTabText">Visualize bus lines.</string>
-    <string name="userGuideSettingsTabText">Adjust the application to your liking.</string>
-    <string name="string_coords">Coordinates:</string>
+    <string name="userGuideStopsTabText">See stops.</string>
+    <string name="userGuideHomeTabText">See close and favourite stops</string>
+    <string name="userGuideLinesTabText">See lines</string>
+    <string name="userGuideSettingsTabText">Configure the app as you want</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="map_id">cf896573b56113e1</string>
+    <string name="setOriginMarker">Set origin</string>
+    <string name="setDestinationMarker">Set destination</string>
+    <string name="BuscarRutas">Search rutes</string>
+    <string name="string_paradas">Stops:</string>
+    <string name="string_coords">Coordenates:</string>
     <string name="string_conect_lines">Lines connected:</string>
     <string name="string_line_separator">-</string>
+    <string name="calcular_rutas">Calculate routes</string>
+    <string name="showPreviousLineButton"><![CDATA[<]]></string>
+    <string name="lineName" />
+    <string name="showNextLineButton"><![CDATA[>]]></string>
+
 </resources>
