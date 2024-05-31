@@ -62,5 +62,8 @@
     <string name="setDestinationMarker">Colocar destino</string>
     <string name="BuscarRutas">Buscar rutas</string>
     <string name="calcular_rutas">Calcular rutas</string>
+    <string name="lineName">AAAAAAAAAA</string>
+    <string name="showPreviousLineButton"><![CDATA[<]]></string>
+    <string name="showNextLineButton"><![CDATA[>]]></string>
 
 </resources>

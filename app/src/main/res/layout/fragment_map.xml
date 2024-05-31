@@ -25,4 +25,45 @@
         android:id="@+id/calculateRoutes">
     </Button>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        map:layout_constraintBottom_toBottomOf="@id/google_map"
+        map:layout_constraintEnd_toEndOf="@+id/google_map"
+        android:backgroundTint="@color/graygreen"
+        android:id="@+id/routesLayout"
+        android:visibility="invisible">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showPreviousRouteButton"
+            android:text="@string/showPreviousLineButton">
+        </Button>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/lineName"
+            android:id="@+id/line_name"
+            >
+        </TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showNextRouteButton"
+            android:text="@string/showNextLineButton">
+        </Button>
+
+    </LinearLayout>
+
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

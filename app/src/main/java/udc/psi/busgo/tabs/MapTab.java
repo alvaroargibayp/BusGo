@@ -22,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
@@ -54,8 +56,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -77,6 +81,12 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     WorkManager workManager;
     volatile boolean workerEnded = false;
 
+    LinearLayout routesLayout;
+
+    Button nextRouteButton;
+    Button previousRouteButton;
+
+    TextView lineName;
     List<Pair<Integer, Pair<Integer, MarkerConDistancia>>> marcadoresCercanosOrigen = new ArrayList<>();
     List<Pair<Integer, Pair<Integer, MarkerConDistancia>>> marcadoresCercanosDestino = new ArrayList<>();
 
@@ -86,6 +96,12 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
     List<Pair<Integer, List<Pair<Integer, String>>>> listaDeListasDeParadasOrigen = new ArrayList<>();
     List<Pair<Integer, List<Pair<Integer, String>>>> listaDeListasDeParadasDestino = new ArrayList<>();
+
+    List<Pair<String, Pair<Integer, Integer>>> rutasList = new ArrayList<>();
+
+    int currentRouteIndex = 0;
+
+
 
     // Cada indice es una parada (Pair)
     // Cada parada (Pair) contiene (IDParada, Lista de lineas (Pair))
@@ -101,11 +117,9 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
         // Marcar linea como valida
         // Obtener el id de la parada de origen y destino
 
-        List<Pair<Integer, Pair<Integer, Integer>>> rutasList = new ArrayList<>();
 
         Log.d("TAG_RUTAS", "ORIGEN: " + listaDeListasDeParadasOrigen.toString());
         Log.d("TAG_RUTAS", "DESTINO: " + listaDeListasDeParadasDestino.toString());
-
 
         for (Pair<Integer, List<Pair<Integer, String>>> paradaOrigen : listaDeListasDeParadasOrigen ) { // Por cada parada en origen...
             for (Pair<Integer, String> lineaOrigen : paradaOrigen.second) { // Por cada linea en la parada de origen...
@@ -114,26 +128,39 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                         if (!paradaDestino.first.equals(paradaOrigen.first)) { // Si la parada de destino no es la misma que la de origen...
                             if (lineaOrigen.first.equals(lineaDestino.first)) { // Si esa linea esta en alguna parada de destino...
                                 Pair<Integer, Integer> paradasOrigenDestino = new Pair<>(paradaOrigen.first, paradaDestino.first);
-                                Pair<Integer, Pair<Integer, Integer>> ruta = new Pair<>(lineaOrigen.first, paradasOrigenDestino);
+                                Pair<String, Pair<Integer, Integer>> ruta = new Pair<>(lineaOrigen.second, paradasOrigenDestino);
                                 Log.d("TAG_RUTAS", "Ruta añadida: " + ruta);
 
                                 rutasList.add(ruta); // Se añade la ruta a la lista (IdLinea, (IdParadaOrigen, IdParadaDestino))
                             }
                         }
-
                     }
-
                 }
             }
         }
 
+        rutasList = removeDuplicates(rutasList);
+
         Log.d("TAG_RUTAS", rutasList.toString());
     }
 
-    private void setUpClusterer(GoogleMap googleMap) {
-        // Position the map.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+    public static List<Pair<String, Pair<Integer, Integer>>> removeDuplicates(List<Pair<String, Pair<Integer, Integer>>> rutasList) {
+        Set<String> seenStrings = new HashSet<>();
+        List<Pair<String, Pair<Integer, Integer>>> uniqueList = new ArrayList<>();
 
+        for (Pair<String, Pair<Integer, Integer>> pair : rutasList) {
+            if (!seenStrings.contains(pair.first)) {
+                seenStrings.add(pair.first);
+                uniqueList.add(pair);
+            }
+        }
+
+        return uniqueList;
+    }
+
+
+
+    private void setUpClusterer(GoogleMap googleMap) {
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
         clusterManager = new ClusterManager<BusStopClusterItem>(requireActivity().getApplicationContext(), googleMap);
@@ -249,9 +276,28 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     public void onClick(View v) {
         if (v == searchButton) {
             calcularRutas();
+            showRoutesLayout();
+        }
+        else if (v == nextRouteButton) {
+            currentRouteIndex += 1;
+            if (currentRouteIndex >=  rutasList.size()-1)
+                currentRouteIndex = rutasList.size()-1;
+            updateRouteLayout();
+        }
+        else if (v == previousRouteButton) {
+            currentRouteIndex -= 1;
+            if (currentRouteIndex < 0)
+                currentRouteIndex = 0;
+            updateRouteLayout();
         }
     }
 
+    private void updateRouteLayout() {
+        lineName.setText(rutasList.get(currentRouteIndex).first);
+    }
+    private void showRoutesLayout() {
+        routesLayout.setVisibility(View.VISIBLE);
+    }
 
 
     public interface OnMapClickedListener {
@@ -400,6 +446,17 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
         searchButton = view.findViewById(R.id.calculateRoutes);
         searchButton.setOnClickListener(this);
+
+        nextRouteButton = view.findViewById(R.id.showNextRouteButton);
+        nextRouteButton.setOnClickListener(this);
+
+        previousRouteButton = view.findViewById(R.id.showPreviousRouteButton);
+        previousRouteButton.setOnClickListener(this);
+
+        routesLayout = view.findViewById(R.id.routesLayout);
+
+        lineName = view.findViewById(R.id.line_name);
+
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(WorkerMap.class).build();
 
         WorkManager workManager1 = WorkManager.getInstance(requireActivity().getApplicationContext());
@@ -466,10 +523,10 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                         new LatLng(43.33920463853277, -8.437498363975866), // Suroeste de la ciudad (latitud, longitud)
                         new LatLng(43.39274161525237, -8.379991804710077)); // Noreste de la ciudad (latitud, longitud)
 
-                //googleMap.setLatLngBoundsForCameraTarget(cityBounds);
+                googleMap.setLatLngBoundsForCameraTarget(cityBounds);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cityBounds.getCenter(), 12));
 
-                //googleMap.setMinZoomPreference(12);
+                googleMap.setMinZoomPreference(8);
 
                 //setUpBusStops(googleMap);
             }
