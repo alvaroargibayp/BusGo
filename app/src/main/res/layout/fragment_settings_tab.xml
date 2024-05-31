@@ -176,14 +176,6 @@
                             android:text="@string/settings_option_initialScreen_lines"
                             android:textColor="@color/white"
                             />
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/settings_toggle_initialScreen_home"
-                            android:checked="true"
-                            android:text="@string/settings_option_initialScreen_home"
-                            android:textColor="@color/white"
-                            />
 
                     </RadioGroup>
 

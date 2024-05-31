@@ -13,7 +13,7 @@
     <string name="settings_initialScreenTittle">Pantalla de inicio</string>
     <string name="settings_launcherOptionsTittle">Configuracion del lanzador</string>
     <string name="settings_option_initialScreen_home">Home (Por defecto)</string>
-    <string name="settings_option_initialScreen_map">Mapa</string>
+    <string name="settings_option_initialScreen_map">Mapa (Por defecto)</string>
     <string name="settings_option_initialScreen_stops">Paradas</string>
     <string name="settings_option_initialScreen_lines">Lineas</string>
     <string name="settings_option_language_spanish">Español</string>
@@ -54,7 +54,6 @@
     <string name="userGuideLinesTabText">Visualiza las lineas</string>
     <string name="userGuideSettingsTabText">Configura la aplicación a tu gusto</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="map_id">cf896573b56113e1</string>

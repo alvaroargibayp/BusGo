@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">BusGo</string>
     <string name="string_lineas">Liña:</string>
-    <string name="home_title">Busqueda unica</string>
-    <string name="lines">Lineas</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="home_title">Búsqueda individual</string>
+    <string name="lines">Liñas</string>
     <string name="stops">Paradas</string>
     <string name="map">Mapa</string>
     <string name="settings">Opcións</string>
     <string name="string_stops">Parada:</string>
     <string name="settings_themeTittle">Tema</string>
-    <string name="settings_languageTittle">Lingua</string>
-    <string name="settings_initialScreenTittle">Pantalla principal</string>
+    <string name="settings_languageTittle">Idioma</string>
+    <string name="settings_initialScreenTittle">Pantalla de inicio</string>
     <string name="settings_launcherOptionsTittle">Opcións do lanzador</string>
-    <string name="settings_option_initialScreen_home">Fogar (Por defecto)</string>
-    <string name="settings_option_initialScreen_map">Mapa</string>
+    <string name="settings_option_initialScreen_home">Home (Por defecto)</string>
+    <string name="settings_option_initialScreen_map">Mapa (Por defecto)</string>
     <string name="settings_option_initialScreen_stops">Paradas</string>
-    <string name="settings_option_initialScreen_lines">Lineas</string>
+    <string name="settings_option_initialScreen_lines">Liñas</string>
     <string name="settings_option_language_spanish">Español</string>
     <string name="settings_option_language_english">Inglés</string>
     <string name="settings_option_language_galician">Galego</string>
@@ -22,23 +23,50 @@
     <string name="settings_option_theme_whiteTheme">Claro</string>
     <string name="settings_option_theme_systemTheme">Sistema</string>
     <string name="settings_option_launcherOptions_showFavoriteStops">Mostrar paradas favoritas</string>
-    <string name="settings_option_launcherOptions_showCloseStops">Mostrar paradas cercanas</string>
-    <string name="settings_option_launcherOptions_numberOfCloseStops">Nº de paradas cercanas</string>
-    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas</string>
-    <string name="et_buscar">Proporcuna un identificador</string>
-    <string name="bt_search_string">Busqueda</string>
-    <string name="settings_showUserGuide">Mostrar guía de usuario (Precisa reinicio)</string>
+    <string name="settings_option_launcherOptions_showCloseStops">Mostrar paradas próximas</string>
+    <string name="settings_option_launcherOptions_numberOfCloseStops">Nº de paradas próximas a mostrar</string>
+    <string name="settings_option_launcherOptions_numberOfFavoriteStops">Nº de paradas favoritas a mostrar</string>
+    <string name="et_buscar">Introduce un id</string>
+    <string name="bt_search_string">Buscar</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="stopsWidgetUndefinedStopsText">Sincroniza o widget cunha parada</string>
+    <string name="stopsWidgetUndefinedStopsButtonText">+</string>
+    <string name="stopsWidgetStopName">Campus Elviña</string>
+    <string name="stopsWidgetStopNameAccDesc">Nome da parada</string>
+    <string name="stopsWidgetLineNumber">24A</string>
+    <string name="stopsWidgetLineNumberAccesDesc">Número de liñas do próximo autobús</string>
+    <string name="stopsWidgetTimeRemainingAccesDesc">Tempo restante para o próximo autobús</string>
+    <string name="stopsWidgetTimeRemaining">5 minutos</string>
+    <string name="stopsWidgetUpdateButton">X</string>
+    <string name="stopsWidgetUpdateButtonAccesDesc">Botón para actualizar a información do widget</string>
+    <string name="settings_showUserGuide">Mostrar guia de usuario\n(Require reinicio)</string>
     <string name="settings_showUserGuideButtonText">Mostrar</string>
     <string name="userGuideMapTabTitle">Mapa</string>
-    <string name="userGuideMapTabText">Busca rutas visualmente apoiándote nun mapa.</string>
+    <string name="userGuideMapTabText">Busca rutas visualmente usando un mapa.</string>
     <string name="userGuideStopsTabTitle">Paradas</string>
-    <string name="userGuideLinesTabTitle">Lineas</string>
-    <string name="userGuideSettingsTabTitle">Axustes</string>
+    <string name="userGuideHomeTabTitle" translatable="false">Home</string>
+    <string name="userGuideLinesTabTitle">Liñas</string>
+    <string name="userGuideSettingsTabTitle">Opcións</string>
     <string name="userGuideStopsTabText">Visualiza as paradas.</string>
-    <string name="userGuideHomeTabText">Visualiza as paradas cercanas e as favoritas.</string>
-    <string name="userGuideLinesTabText">Visualiza as lineas.</string>
-    <string name="userGuideSettingsTabText">Axusta a aplicación a teu gusto.</string>
+    <string name="userGuideHomeTabText">Visualiza paradas próximas e favoritas</string>
+    <string name="userGuideLinesTabText">Visualiza as lineas</string>
+    <string name="userGuideSettingsTabText">Configura a aplicación a teu gusto</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="map_id">cf896573b56113e1</string>
+    <string name="setOriginMarker">Colocar origen</string>
+    <string name="setDestinationMarker">Colocar destino</string>
+    <string name="BuscarRutas">Buscar rutas</string>
+    <string name="string_paradas">Paradas:</string>
     <string name="string_coords">Coordenadas:</string>
     <string name="string_conect_lines">Liñas que conecta:</string>
     <string name="string_line_separator">-</string>
+    <string name="calcular_rutas">Calcular rutas</string>
+    <string name="showPreviousLineButton"><![CDATA[<]]></string>
+    <string name="lineName" />
+    <string name="showNextLineButton"><![CDATA[>]]></string>
+
 </resources>
