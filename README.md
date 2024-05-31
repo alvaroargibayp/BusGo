@@ -9,6 +9,7 @@ Proyecto de desarollo de una aplicación de visualización y calculo de rutas de
 ## Objetivos ✨
 
 Con esta aplicación buscamos optimizar la experiencia de los usuarios al utilizar el transporte público, proporcionando información precisa en tiempo real sobre rutas, horarios, paradas y disponibilidad de autobuses.
+
 Por otra parte, ayuda a los usuarios a planificar sus desplazamientos de manera más eficiente y fomentar el uso del transporte público, teniendo un impacto positivo en el medio ambiente y en la calidad del aire.
 
 ## Características ⭐
