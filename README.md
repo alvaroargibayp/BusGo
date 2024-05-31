@@ -13,7 +13,7 @@ Por otra parte, ayuda a los usuarios a planificar sus desplazamientos de manera 
 
 ## Características
 >
-- **Tab Mapa**🗺️: Visualización y cálculo de rutas personalizadas.
-- **Tab Paradas**🛑: Lista de las paradas y detalle de cada parada.
-- **Tab Lineas**🚏: Listas de líneas y detalles de cada línea.
-- **Tab Ajustes**⚙️: Personalización y ajustes de la aplicación.
+- **Tab 'Mapa'** 🗺️ : Visualización y cálculo de rutas personalizadas.
+- **Tab 'Paradas'** 🛑 : Lista de las paradas y detalle de cada parada.
+- **Tab 'Lineas'** 🚏 : Listas de líneas y detalles de cada línea.
+- **Tab 'Ajustes'** ⚙️ : Personalización y ajustes de la aplicación.
