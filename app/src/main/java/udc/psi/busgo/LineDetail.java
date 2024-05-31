@@ -269,6 +269,7 @@ public class LineDetail extends Fragment{
     }
 
     public void searchBusesInALine(int lineId){
+        lineDetailAdapter.resetBuses();
         Log.d(TAG, "Search Buses in line " + lineId);
         OneTimeWorkRequest testLineRequest = new OneTimeWorkRequest.Builder(JSONRequestWorker.class).setInputData(createUrlForLineBuses(lineId)).build();
         WorkContinuation continuation = workManager.beginWith(testLineRequest);

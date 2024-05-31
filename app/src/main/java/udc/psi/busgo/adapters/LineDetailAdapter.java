@@ -80,4 +80,16 @@ public class LineDetailAdapter extends RecyclerView.Adapter<LineDetailAdapter.Li
             }
         }
     }
+
+    public void resetBuses() {
+        for(int i = 0; i < stopsList.size(); i++) {
+            Stop stop = stopsList.get(i);
+            String newName = stop.getName();
+            if (newName.charAt(newName.length() - 1) == '*') {
+                newName = newName.substring(0, newName.length() - 1);
+            }
+            stop.setName(newName);
+            notifyItemChanged(i);
+        }
+    }
 }
