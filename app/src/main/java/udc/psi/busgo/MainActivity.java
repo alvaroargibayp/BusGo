@@ -30,12 +30,11 @@ import java.util.Objects;
 import udc.psi.busgo.databinding.ActivityMainBinding;
 import udc.psi.busgo.tabs.HomeTab;
 import udc.psi.busgo.tabs.LinesTab;
-import udc.psi.busgo.tabs.MapFragment;
 import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapClickedListener, StopsTab.StopDetailSelection, LinesTab.LineDetailSelection {
+public class MainActivity extends AppCompatActivity implements MapTab.OnMapClickedListener, StopsTab.StopDetailSelection, LinesTab.LineDetailSelection {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private ActivityMainBinding binding;
@@ -153,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
 
 
 
-    private void checkLocationPermission() {
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PERMISSION_GRANTED) {
@@ -166,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         if (!mLocationPermissionGranted) {
             Log.d("_TAG", "Error loading Navigation SDK: The user has not granted location permission.");
         }
+        return true;
     }
 
     @Override
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
                 // the user clicked on colors[which]
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                MapFragment mapFragment = (MapFragment) fragmentManager
+                MapTab mapFragment = (MapTab) fragmentManager
                         .findFragmentByTag("f0");
 
                 assert mapFragment != null;

@@ -64,5 +64,9 @@
     <string name="string_paradas">Paradas:</string>
     <string name="string_coords">Coordenadas:</string>
     <string name="string_conect_lines">Líneas que conecta:</string>
+    <string name="calcular_rutas">Calcular rutas</string>
+    <string name="showPreviousLineButton"><![CDATA[<]]></string>
+    <string name="lineName" />
+    <string name="showNextLineButton"><![CDATA[>]]></string>
 
 </resources>
