@@ -91,7 +91,7 @@ public class StopsTab extends Fragment {
                         Log.d("_TAG", response.toString());
                         //binding.tvStopsContent.setText(response.toString());
                         try {
-                            for (int i = 0; i < response.getJSONArray("paradas").length(); i++){
+                            for (int i = 0; i < response.getJSONArray("paradas").length(); i++) {
                                 JSONObject currentObject = (JSONObject) response.getJSONArray("paradas").get(i);
                                 JSONArray coordsArray = currentObject.getJSONArray("coords");
                                 double[] coords = new double[2];

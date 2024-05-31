@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:text="@string/calcular_rutas"
         tools:ignore="MissingConstraints"
-        android:id="@+id/calculateRoutes">
+        android:id="@+id/calculateRoutes"
+        android:enabled="false">
     </Button>
 
     <LinearLayout

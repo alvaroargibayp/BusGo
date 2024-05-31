@@ -77,6 +77,7 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     Marker originMarker = null;
     Marker destinationMarker = null;
     Button searchButton;
+
     List<Pair<Integer, LatLng>> stopsCoordsList = new ArrayList<>();
     WorkManager workManager;
     volatile boolean workerEnded = false;
@@ -117,7 +118,6 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
         // Marcar linea como valida
         // Obtener el id de la parada de origen y destino
 
-
         Log.d("TAG_RUTAS", "ORIGEN: " + listaDeListasDeParadasOrigen.toString());
         Log.d("TAG_RUTAS", "DESTINO: " + listaDeListasDeParadasDestino.toString());
 
@@ -157,9 +157,6 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
         return uniqueList;
     }
-
-
-
     private void setUpClusterer(GoogleMap googleMap) {
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
@@ -242,6 +239,8 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
                     .snippet(offsetItem.getSnippet());
 
             currentMapMarkers.add(new Pair<Integer, MarkerOptions>(coords.first, markerOptions));
+
+
             pos = pos + 1;
         }
     }
@@ -270,8 +269,10 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
             obtenerMarcadoresCercanosDestino(originMarker.getPosition());
 
         }
-    }
 
+        if (destinationMarker != null && originMarker != null)
+            searchButton.setEnabled(true);
+    }
     @Override
     public void onClick(View v) {
         if (v == searchButton) {
@@ -298,7 +299,6 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
     private void showRoutesLayout() {
         routesLayout.setVisibility(View.VISIBLE);
     }
-
 
     public interface OnMapClickedListener {
         public void onMapClicked(GoogleMap googleMap, LatLng latLng);
