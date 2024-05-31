@@ -34,7 +34,7 @@ import udc.psi.busgo.tabs.MapTab;
 import udc.psi.busgo.tabs.SettingsTab;
 import udc.psi.busgo.tabs.StopsTab;
 
-public class MainActivity extends AppCompatActivity implements MapTab.OnMapClickedListener {
+public class MainActivity extends AppCompatActivity implements MapTab.OnMapClickedListener, StopsTab.StopDetailSelection, LinesTab.LineDetailSelection {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private ActivityMainBinding binding;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
 
     HomeTab homeTab;
     LinesTab linesTab;
+    MapTab mapTab;
     SettingsTab settingsTab;
     StopsTab stopsTab;
 
@@ -63,9 +64,11 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
         setContentView(view);
         Log.d(TAG, "OnCreate");
 
-        //checkLocationPermission();
+
+        checkLocationPermission();
 
         configureTabs();
+
 
         if (isFirstTimeOnApp()) // Comprobar si es la primera apertura de la aplicacion
             showShowcaseStep();
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
                 .build();
 
         userGuide.forceTextPosition(ShowcaseView.BELOW_SHOWCASE);
+
+
         userGuide.setOnShowcaseEventListener(new OnShowcaseEventListener() {
             @Override
             public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -159,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
 
         if (!mLocationPermissionGranted) {
             Log.d("_TAG", "Error loading Navigation SDK: The user has not granted location permission.");
-            return false;
         }
         return true;
     }
@@ -183,13 +187,7 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
         tabLayout = binding.tabLayout;
         viewPager = binding.viewPager;
 
-        viewPagerAdapter = new ViewPagerAdapter(this, new LinesTab.DetailSelection() {
-            @Override
-            public void seeDetail(Fragment lineDetail) {
-                viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
-                viewPager.setCurrentItem(6, false);
-            }
-        });
+        viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
 
         // Comportamiento de las pestañas
@@ -197,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d(TAG, "Seleccionada la pestaña " + tab.getPosition() + "\n Pestaña actual " + viewPager.getCurrentItem());
-                if (viewPager.getCurrentItem() == 5){
+                if (viewPager.getCurrentItem() >= 5){
                     viewPager.setCurrentItem(tab.getPosition(), false);
                 } else{
                 viewPager.setCurrentItem(tab.getPosition(), true);
@@ -246,11 +244,11 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
                 // the user clicked on colors[which]
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                MapTab mapTab = (MapTab) fragmentManager
+                MapTab mapFragment = (MapTab) fragmentManager
                         .findFragmentByTag("f0");
 
-                assert mapTab != null;
-                mapTab.placeMarker(googleMap, latLng, which);
+                assert mapFragment != null;
+                mapFragment.placeMarker(googleMap, latLng, which);
             }
         });
 
@@ -260,5 +258,16 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
 
     }
 
+    @Override
+    public void seeStopDetail(Fragment stopDetail) {
+        viewPagerAdapter.setStopDetail((StopDetail) stopDetail);
+        viewPager.setCurrentItem(6, false);
+    }
+    @Override
+    public void seeLineDetail(Fragment lineDetail) {
+        viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
+        viewPager.setCurrentItem(5,false);
+
+    }
 }
 

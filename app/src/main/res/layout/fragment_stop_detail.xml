@@ -3,33 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tabs.StopsTab"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".StopDetail">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/string_stops"
-        android:id="@+id/tv_tittle_stops" />
+        android:id="@+id/tv_stop_detail_tittle" />
 
-    <ScrollView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="@string/string_coords"
+        android:id="@+id/tv_stop_detail_coords"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_stops_crontent"
-            android:scrollbars="vertical"/>
-
-    </ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_conect_lines"
+        android:id="@+id/tv_stop_detail_conect_lines"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/stops_rv"
+            android:id="@+id/stop_lines_rv"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

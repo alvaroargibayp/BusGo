@@ -19,6 +19,12 @@ public class Line implements Parcelable {
         this.id = id;
     }
 
+    public Line(String color, String name, int id) {
+        this.color = color;
+        this.name = name;
+        this.id = id;
+    }
+
     protected Line(Parcel in) {
         color = in.readString();
         destination = in.readString();
@@ -28,7 +34,6 @@ public class Line implements Parcelable {
     }
 
     public static final Creator<Line> CREATOR = new Creator<Line>() {
-
 
         @Override
         public Line createFromParcel(Parcel in) {

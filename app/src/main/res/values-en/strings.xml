@@ -38,4 +38,6 @@
     <string name="userGuideHomeTabText">Visualize close stops and favorite stops.</string>
     <string name="userGuideLinesTabText">Visualize bus lines.</string>
     <string name="userGuideSettingsTabText">Adjust the application to your liking.</string>
+    <string name="string_coords">Coordinates:</string>
+    <string name="string_conect_lines">Lines connected:</string>
 </resources>
