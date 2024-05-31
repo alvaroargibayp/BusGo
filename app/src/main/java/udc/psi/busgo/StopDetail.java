@@ -74,7 +74,9 @@ public class StopDetail extends Fragment implements View.OnClickListener{
         swipeRefresh = binding.swipeRefresh;
         swipeRefresh.setEnabled(false);
         setLayout();
-        searchSpecificStop(stop.getId());
+        if (stop != null){
+            searchSpecificStop(stop.getId());
+        }
         return view;
     }
     private void setLayout(){

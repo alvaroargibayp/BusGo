@@ -86,7 +86,7 @@ public class LineDetail extends Fragment{
 
 
     private void setLayoutAndEnvironment(){
-        workManager = WorkManager.getInstance(getActivity().getApplicationContext());
+        workManager = WorkManager.getInstance(requireContext());
         buses = new ArrayList<Bus>();
         recyclerView = binding.linesRv;
         initRecycler();

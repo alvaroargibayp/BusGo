@@ -2,18 +2,10 @@
 package udc.psi.busgo.tabs;
 
 
-import static udc.psi.busgo.StringUtils.decompress;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -27,8 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,30 +37,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.maps.android.clustering.ClusterManager;
-
-
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import udc.psi.JsonUtils;
 import udc.psi.busgo.MainActivity;
@@ -193,13 +179,13 @@ public class MapTab extends Fragment implements GoogleMap.OnMarkerClickListener,
 
 
                 LatLng coords = new LatLng(coordsLat, coordsLong);
-                Log.d("_TAG2", coords.toString());
+                //Log.d("_TAG2", coords.toString());
 
 
                 Pair<Integer, LatLng> pair = new Pair<Integer, LatLng>(stopId, coords);
                 stopsCoordsList.add(pair);
 
-                Log.d("_TAG3", stopsCoordsList.toString());
+                //Log.d("_TAG3", stopsCoordsList.toString());
             }
             return true;
         } catch (JSONException e) {

@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements MapTab.OnMapClick
     @Override
     public void seeLineDetail(Fragment lineDetail) {
         viewPagerAdapter.setLineDetail((LineDetail) lineDetail);
-        viewPager.setCurrentItem(6,false);
+        viewPager.setCurrentItem(4,false);
 
     }
 }

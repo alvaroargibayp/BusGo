@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import udc.psi.busgo.databinding.StopLayoutBinding;
-import udc.psi.busgo.objects.Line;
 import udc.psi.busgo.objects.Stop;
 
 public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder> {
@@ -69,9 +68,9 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.StopViewHolder
         }
 
         public void bind(Stop stop){
-            Log.d(TAG, "Bind stop:\n Name: " + stop.getName() + "\n Id: " + stop.getId()
-                    + "\n Coordenadas: " + stop.getCoords()[0] + " - " + stop.getCoords()[1]
-                    + "\n osmId: " + stop.getOsmid());
+//            Log.d(TAG, "Bind stop:\n Name: " + stop.getName() + "\n Id: " + stop.getId()
+//                    + "\n Coordenadas: " + stop.getCoords()[0] + " - " + stop.getCoords()[1]
+//                    + "\n osmId: " + stop.getOsmid());
             id.setText("" + stop.getId());
             name.setText(stop.getName());
             this.stop = stop;

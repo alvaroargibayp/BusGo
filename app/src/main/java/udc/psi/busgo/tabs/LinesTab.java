@@ -59,13 +59,21 @@ public class LinesTab extends Fragment {
         // Inflate the layout for this fragment
 
         binding = FragmentLinesTabBinding.inflate(inflater, container, false);
+        Log.d(TAG, "A");
         View view = binding.getRoot();
+        Log.d(TAG, "A");
         view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.backgroundColor));
+        Log.d(TAG, "A");
         recyclerView = binding.linesRv;
+        Log.d(TAG, "A");
         swipeRefreshLayout = binding.swipeRefresh;
-        workManager = WorkManager.getInstance(getActivity().getApplicationContext());
+        Log.d(TAG, "A");
+        workManager = WorkManager.getInstance(requireContext());
+        Log.d(TAG, "A");
         swipeRefreshLayout.setEnabled(false);
+        Log.d(TAG, "A");
         initRecycler();
+        Log.d(TAG, "A");
         searchLines();
         return view;
     }
